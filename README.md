@@ -122,15 +122,15 @@ Open this exercise file: [exercise-5.md](__workshop/exercise-5.md)
 
 Open this exercise file: [exercise-6.md](__workshop/exercise-6.md)
 
-## Exercise 7: Purchase state
-
-Open this exercise file: [exercise-7.md](__workshop/exercise-7.md)
-
 ---
 
 <center>🟡 - Minimally complete workshop (75%) - 🟡</center>
 
 ---
+
+## Exercise 7: Purchase state
+
+Open this exercise file: [exercise-7.md](__workshop/exercise-7.md)
 
 ## Exercise 8: Purchasing!
 

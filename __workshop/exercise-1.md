@@ -2,7 +2,7 @@
 
 For this project, we'll use the following dependencies:
 
-- `@tippy.js/react`
+- `@tippyjs/react`
 - `@material-ui/core`
 - `@material-ui/lab`
 - `react-icons-kit`

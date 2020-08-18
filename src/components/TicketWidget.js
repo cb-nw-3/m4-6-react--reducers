@@ -98,6 +98,7 @@ const SeatWrapper = styled.div`
 const GreyTippy = styled(Tippy)`
   background-color: #333;
   color: white;
+  border-radius: 4px;
 `;
 
 export default TicketWidget;

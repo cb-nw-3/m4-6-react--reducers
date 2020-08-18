@@ -1,22 +1,19 @@
 import React from "react";
 import styled from "styled-components";
 import CircularProgress from "@material-ui/core/CircularProgress";
-
 import { getRowName, getSeatNum } from "../helpers";
 import { range } from "../utils";
 import { SeatContext } from "./SeatContext";
 import SeatSvg from "../assets/seat-available.svg";
+import Tippy from "@tippyjs/react";
+import "tippy.js/dist/tippy.css";
 
 const TicketWidget = () => {
-  // TODO: use values from Context
   const { state, actions } = React.useContext(SeatContext);
   console.log(state, actions);
   const numOfRows = state.numOfRows;
   const seatsPerRow = state.seatsPerRow;
-  // console.log(numOfRows, seatsPerRow);
 
-  // TODO: implement the loading spinner <CircularProgress />
-  // with the hasLoaded flag
   const hasLoaded = state.hasLoaded;
 
   if (hasLoaded === false) {
@@ -41,7 +38,18 @@ const TicketWidget = () => {
                 return (
                   <SeatWrapper key={seatId}>
                     {state.seats[seatId].isBooked ? (
-                      <img alt="seat image" src={SeatSvg} />
+                      <GreyTippy
+                        content={
+                          <span>{`Row ${rowName}, Seat ${seatIndex} - $${state.seats[seatId].price}`}</span>
+                        }
+                        arrow={true}
+                      >
+                        <img
+                          alt="seat image"
+                          src={SeatSvg}
+                          style={{ cursor: "pointer" }}
+                        />
+                      </GreyTippy>
                     ) : (
                       <img
                         alt="seat image"
@@ -64,7 +72,7 @@ const Wrapper = styled.div`
   background-color: #333;
   border: 1px solid #ccc;
   border-radius: 3px;
-  padding: 8px;
+  padding: 40px 8px;
 `;
 
 const LoadingWrapper = styled.div`
@@ -86,6 +94,10 @@ const RowLabel = styled.div`
 const SeatWrapper = styled.div`
   padding: 5px;
   background: #eee;
+`;
+const GreyTippy = styled(Tippy)`
+  background-color: #333;
+  color: white;
 `;
 
 export default TicketWidget;

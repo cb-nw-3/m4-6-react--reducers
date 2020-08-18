@@ -11,10 +11,17 @@ const initialState = {
 
 function reducer(state, action) {
     switch (action.type) {
-        case '':
-            return {}
+        case 'receive-seat-info-from-server': {
+            return {
+                ...state,
+                hasLoaded: true,
+                seats: action.seats,
+                numOfRows: action.numOfRows,
+                seatsPerRow: action.seatsPerRow,
+            };
+        }
         default:
-            return state
+            throw new Error(`Error: ${action.type}`);
     }
 }
 
@@ -27,6 +34,7 @@ export const SeatProvider = ({ children }) => {
             ...data,
         });
     };
+
     return (
         <SeatContext.Provider
             value={{

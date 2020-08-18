@@ -40,7 +40,15 @@ const TicketWidget = () => {
 
                 return (
                   <SeatWrapper key={seatId}>
-                    <img alt="seat image" src={SeatSvg} />
+                    {state.seats[seatId].isBooked ? (
+                      <img alt="seat image" src={SeatSvg} />
+                    ) : (
+                      <img
+                        alt="seat image"
+                        src={SeatSvg}
+                        style={{ filter: "grayscale(100%)" }}
+                      />
+                    )}
                   </SeatWrapper>
                 );
               })}

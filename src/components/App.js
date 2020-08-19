@@ -4,6 +4,8 @@ import GlobalStyles from "./GlobalStyles";
 
 import { SeatContext } from "./SeatProvider";
 
+import TicketWidget from "./TicketWidget";
+
 function App() {
   const {
     state: { numOfRows },
@@ -21,6 +23,7 @@ function App() {
     <>
       <GlobalStyles />
       <h1>This Venue has {numOfRows} rows!</h1>
+      <TicketWidget />
     </>
   );
 }

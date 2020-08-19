@@ -1,7 +1,9 @@
 import React from "react";
+import styled from "styled-components";
 
 import GlobalStyles from "./GlobalStyles";
 import { SeatContext } from "./SeatContext";
+import TicketWidget from "../components/TicketWidget";
 
 function App() {
   const {
@@ -15,12 +17,18 @@ function App() {
       .then((data) => receiveSeatInfoFromServer(data));
   }, []);
   return (
-    <>
+    <Wrapper>
       <GlobalStyles />
-      <div>numOfRows: {numOfRows}</div>
-      <div>seatsPerRow: {seatsPerRow}</div>
-    </>
+      <TicketWidget></TicketWidget>
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
 
 export default App;

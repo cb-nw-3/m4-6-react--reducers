@@ -14,63 +14,56 @@ const TicketWidget = () => {
   // const seatsPerRow = 6;
 
   const {
-    state: { numOfRows, seatsPerRow, hasLoaded },
+    state: { numOfRows, seatsPerRow, hasLoaded, seats },
   } = React.useContext(SeatContext);
 
   // TODO: implement the loading spinner <CircularProgress />
   // with the hasLoaded flag
 
-  // if (!hasLoaded) {
-  //   return <CircularProgress />;
-  // }
+  if (!hasLoaded) {
+    return <CircularProgress />;
+  }
 
   return (
     <Wrapper>
-      {!hasLoaded ? (
-        <CircularProgress />
-      ) : (
-        <>
-          {range(numOfRows).map((rowIndex) => {
-            const rowName = getRowName(rowIndex);
+      {range(numOfRows).map((rowIndex) => {
+        const rowName = getRowName(rowIndex);
 
-            return (
-              <Row key={rowIndex}>
-                <RowLabel>Row {rowName}</RowLabel>
-                {range(seatsPerRow).map((seatIndex) => {
-                  const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
+        return (
+          <Row key={rowIndex}>
+            <RowLabel>Row {rowName}</RowLabel>
+            {range(seatsPerRow).map((seatIndex) => {
+              const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
+              const seat = seats[seatId];
 
-                  return (
-                    <SeatWrapper key={seatId}>
-                      {/* TODO: Render the actual <Seat /> */}
-                      <Seat />
-                    </SeatWrapper>
-                  );
-                })}
-              </Row>
-            );
-          })}
-        </>
-      )}
+              return (
+                <SeatWrapper key={seatId}>
+                  {/* TODO: Render the actual <Seat /> */}
+                  <Seat
+                    isBooked={seat.isBooked}
+                    price={seat.price}
+                    seatNum={getSeatNum(seatIndex)}
+                    rowName={rowName}
+                  />
+                </SeatWrapper>
+              );
+            })}
+          </Row>
+        );
+      })}
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   background: #eee;
   border: 1px solid #ccc;
   border-radius: 3px;
   padding: 8px;
-  margin: 0 20%;
 `;
 
 const Row = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
   position: relative;
 
   &:not(:last-of-type) {
@@ -80,7 +73,16 @@ const Row = styled.div`
 
 const RowLabel = styled.div`
   font-weight: bold;
-  color: black;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  transform: translateX(calc(-100% - 30px));
+  font-size: 14px;
+  color: white;
+  font-weight: bold;
+  line-height: 46px;
 `;
 
 const SeatWrapper = styled.div`

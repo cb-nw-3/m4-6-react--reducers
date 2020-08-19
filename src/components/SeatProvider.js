@@ -10,7 +10,22 @@ const initialState = {
 };
 
 function reducer(state, action) {
-  //To Do stuff here
+  // console.log(action);
+  switch (action.type) {
+    case "receive-seat-info-from-server": {
+      const results = {
+        ...state,
+        hasLoaded: true,
+        seats: action.seats,
+        numOfRows: action.numOfRows,
+        seatsPerRow: action.seatsPerRow,
+      };
+      console.log("the results are stored as:", results);
+      return results;
+    }
+    default:
+      throw new Error(`Unrecognized action: ${action.type}`);
+  }
 }
 
 const SeatProvider = ({ children }) => {

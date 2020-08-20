@@ -2,9 +2,11 @@ import React from "react";
 
 import GlobalStyles from "./GlobalStyles";
 import { SeatContext } from "./SeatContext";
+import TicketWidget from "./TicketWidget";
+import styled from "styled-components";
+
 function App() {
   const {
-    state: { numOfRows },
     actions: { receiveSeatInfoFromServer },
   } = React.useContext(SeatContext);
 
@@ -17,11 +19,17 @@ function App() {
       });
   }, []);
   return (
-    <>
+    <Wrapper>
       <GlobalStyles />
-      there are {numOfRows} in this theater
-    </>
+      <TicketWidget />
+    </Wrapper>
   );
 }
 
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
 export default App;

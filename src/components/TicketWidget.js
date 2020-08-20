@@ -1,47 +1,70 @@
-import React from 'react';
-import styled from 'styled-components';
-import CircularProgress from '@material-ui/core/CircularProgress';
-
-import { getRowName, getSeatNum } from '../helpers';
-import { range } from '../utils';
+import React from "react";
+import styled from "styled-components";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { SeatContext } from "./SeatContext";
+import { getRowName, getSeatNum } from "../helpers";
+import { range } from "../utils";
+import Seat from "./Seat";
 
 const TicketWidget = () => {
   // TODO: use values from Context
-  const numOfRows = 6;
-  const seatsPerRow = 6;
+  const {
+    state: { numOfRows, seatsPerRow, hasLoaded, seats },
+  } = React.useContext(SeatContext);
+  console.log(hasLoaded);
 
   // TODO: implement the loading spinner <CircularProgress />
   // with the hasLoaded flag
 
   return (
-    <Wrapper>
-      {range(numOfRows).map(rowIndex => {
-        const rowName = getRowName(rowIndex);
+    <BigWrapper>
+      {hasLoaded === true ? (
+        <Wrapper>
+          {range(numOfRows).map((rowIndex) => {
+            const rowName = getRowName(rowIndex);
 
-        return (
-          <Row key={rowIndex}>
-            <RowLabel>Row {rowName}</RowLabel>
-            {range(seatsPerRow).map(seatIndex => {
-              const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
+            return (
+              <Row key={rowIndex}>
+                <RowLabel>Row {rowName}</RowLabel>
+                {range(seatsPerRow).map((seatIndex) => {
+                  const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
+                  const isSeatBooked = seats[seatId].isBooked;
+                  const seatPrice = seats[seatId].price;
+                  const seatDescription = `Row ${rowName}, Seat ${getSeatNum(
+                    seatIndex
+                  )}`;
 
-              return (
-                <SeatWrapper key={seatId}>
-                  {/* TODO: Render the actual <Seat /> */}
-                </SeatWrapper>
-              );
-            })}
-          </Row>
-        );
-      })}
-    </Wrapper>
+                  return (
+                    <SeatWrapper
+                      style={{
+                        filter: isSeatBooked ? "grayscale(100%)" : "none",
+                      }}
+                      key={seatId}
+                    >
+                      <Seat
+                        seatPrice={seatPrice}
+                        isSeatBooked={isSeatBooked}
+                        seatDescription={seatDescription}
+                      />
+                    </SeatWrapper>
+                  );
+                })}
+              </Row>
+            );
+          })}
+        </Wrapper>
+      ) : (
+        <CircularProgress />
+      )}
+    </BigWrapper>
   );
 };
 
 const Wrapper = styled.div`
-  background: #eee;
   border: 1px solid #ccc;
   border-radius: 3px;
   padding: 8px;
+  background: #eee;
 `;
 
 const Row = styled.div`
@@ -54,11 +77,19 @@ const Row = styled.div`
 `;
 
 const RowLabel = styled.div`
-  font-weight: bold;
+  position: absolute;
+  left: -75px;
+  top: 15px;
 `;
 
 const SeatWrapper = styled.div`
   padding: 5px;
+`;
+
+const BigWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default TicketWidget;

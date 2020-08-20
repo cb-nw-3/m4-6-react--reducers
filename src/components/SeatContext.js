@@ -9,7 +9,14 @@ const initialState = {
   seatsPerRow: 0,
 };
 
-function reducer(state, action) {}
+function reducer(state, action) {
+  switch (action.type) {
+    case "receive-seat-info-from-server":
+      return { ...state, key1: false };
+    default:
+      return state;
+  }
+}
 
 export const SeatProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);

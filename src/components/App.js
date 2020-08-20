@@ -11,7 +11,7 @@ function App() {
     fetch("/api/seat-availability")
       .then((res) => res.json())
       .then((data) => console.log(data));
-  }, []);
+  }, [receiveSeatInfoFromServer]);
   return (
     <>
       <GlobalStyles />

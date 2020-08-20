@@ -16,6 +16,7 @@ function App() {
       .then((res) => res.json())
       .then((data) => receiveSeatInfoFromServer(data));
   }, []);
+  
   return (
     <Wrapper>
       <GlobalStyles />

@@ -7,7 +7,6 @@ import TicketWidget from "./TicketWidget";
 
 function App() {
   const {
-    state: { numOfRows, seatsPerRow },
     actions: { receiveSeatInfoFromServer },
   } = React.useContext(SeatContext);
 

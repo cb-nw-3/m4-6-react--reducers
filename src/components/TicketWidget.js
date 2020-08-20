@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Tippy from "@tippyjs/react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { getRowName, getSeatNum } from "../helpers";
@@ -11,8 +12,6 @@ const TicketWidget = () => {
   const {
     state: { seats, numOfRows, seatsPerRow, hasLoaded },
   } = React.useContext(SeatContext);
-
-  const disabledSeatStyle = { filter: "greyscale(100%)" };
 
   return (
     <Wrapper>
@@ -32,15 +31,23 @@ const TicketWidget = () => {
                   return (
                     <SeatWrapper key={seatId}>
                       {
-                        <img
-                          src={seatAvailable}
-                          alt="seat icon"
-                          style={{
-                            filter: seats[seatId].isBooked
-                              ? "grayscale(100%)"
-                              : "none",
-                          }}
-                        />
+                        <StyledTippy
+                          content={`Row ${rowName}, Seat ${getSeatNum(
+                            seatIndex
+                          )} - $${seats[seatId].price}`}
+                          delay={[100, 50]}
+                          arrow={true}
+                        >
+                          <img
+                            src={seatAvailable}
+                            alt="seat icon"
+                            style={{
+                              filter: seats[seatId].isBooked
+                                ? "grayscale(100%)"
+                                : "none",
+                            }}
+                          />
+                        </StyledTippy>
                       }
                     </SeatWrapper>
                   );
@@ -78,6 +85,12 @@ const Row = styled.div`
   &:not(:last-of-type) {
     border-bottom: 1px solid #585858;
   }
+`;
+
+const StyledTippy = styled(Tippy)`
+  background: black;
+  border-radius: 4px;
+  padding: 3px 5px;
 `;
 
 const RowLabel = styled.div`

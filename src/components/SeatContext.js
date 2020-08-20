@@ -12,7 +12,13 @@ const initialState = {
 function reducer(state, action) {
   switch (action.type) {
     case "receive-seat-info-from-server":
-      return { ...state, key1: false };
+      return {
+        ...state,
+        hasLoaded: true,
+        seats: action.seats,
+        numOfRows: action.numOfRows,
+        seatsPerRow: action.seatsPerRow,
+      };
     default:
       return state;
   }

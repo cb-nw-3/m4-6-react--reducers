@@ -1,12 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import Tippy from "@tippyjs/react";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { getRowName, getSeatNum } from "../helpers";
 import { range } from "../utils";
 import { SeatContext } from "./SeatContext";
-import seatAvailable from "../assets/seat-available.svg";
+import Seat from "./Seat";
 
 const TicketWidget = () => {
   const {
@@ -27,28 +26,19 @@ const TicketWidget = () => {
                 <RowLabel>Row {rowName}</RowLabel>
                 {range(seatsPerRow).map((seatIndex) => {
                   const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
+                  const seat = seats[seatId];
 
                   return (
                     <SeatWrapper key={seatId}>
-                      {
-                        <StyledTippy
-                          content={`Row ${rowName}, Seat ${getSeatNum(
-                            seatIndex
-                          )} - $${seats[seatId].price}`}
-                          delay={[100, 50]}
-                          arrow={true}
-                        >
-                          <img
-                            src={seatAvailable}
-                            alt="seat icon"
-                            style={{
-                              filter: seats[seatId].isBooked
-                                ? "grayscale(100%)"
-                                : "none",
-                            }}
-                          />
-                        </StyledTippy>
-                      }
+                      <Seat
+                        rowIndex={rowIndex}
+                        seatIndex={seatIndex}
+                        seatId={seatId}
+                        width={36}
+                        height={36}
+                        price={seat.price}
+                        status={seat.isBooked ? "unavailable" : "available"}
+                      />
                     </SeatWrapper>
                   );
                 })}
@@ -85,12 +75,6 @@ const Row = styled.div`
   &:not(:last-of-type) {
     border-bottom: 1px solid #585858;
   }
-`;
-
-const StyledTippy = styled(Tippy)`
-  background: black;
-  border-radius: 4px;
-  padding: 3px 5px;
 `;
 
 const RowLabel = styled.div`

@@ -30,7 +30,7 @@ const TicketWidget = () => {
 
                   return (
                     <SeatWrapper key={seatId}>
-                      {<img alt="airplane seat" src={seatSrc} />}
+                      {<SeatImg alt="airplane seat" src={seatSrc} />}
                     </SeatWrapper>
                   );
                 })}
@@ -39,7 +39,9 @@ const TicketWidget = () => {
           })}
         </Wrapper>
       ) : (
-        <div>Loading</div>
+        <div>
+          <CircularProgress /> LOADING
+        </div>
       )}
     </>
   );
@@ -67,6 +69,10 @@ const RowLabel = styled.div`
 
 const SeatWrapper = styled.div`
   padding: 5px;
+`;
+
+const SeatImg = styled.img`
+  filter: grayscale(100%);
 `;
 
 export default TicketWidget;

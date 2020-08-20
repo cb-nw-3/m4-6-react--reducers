@@ -6,8 +6,10 @@ import { getRowName, getSeatNum } from '../helpers';
 import { range } from '../utils';
 
 import { SeatContext } from './SeatContext';
-
+import Seat from './Seat';
 import seatImage from '../assets/seat-available.svg';
+
+import Tippy from '@tippyjs/react';
 
 const TicketWidget = () => {
   const {
@@ -37,13 +39,20 @@ const TicketWidget = () => {
             <RowLabel>Row {rowName}</RowLabel>
             {range(seatsPerRow).map(seatIndex => {
               const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
-
+              console.log('inside', seats[seatId].price)
+              console.log('seatId', seatId)
               return (
-                <SeatWrapper key={seatId}>
-                  {
-                    <img src={seatImage} />
-                  }
-                </SeatWrapper>
+                <Tippy style={{ background: 'black' }} content={`${seatId} - $${seats[seatId].price}`}>
+                  <SeatWrapper key={seatId}>
+                    {
+
+                      <img src={seatImage}
+                        style={{
+                          filter: (seats[seatId].isBooked) ? 'grayscale(0%)' : 'grayscale(100%)',
+                        }} />
+                    }
+                  </SeatWrapper>
+                </Tippy>
               );
             })}
           </Row>

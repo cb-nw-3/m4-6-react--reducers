@@ -80,7 +80,7 @@ const Button = styled.button`
 `;
 
 const Span = styled.span`
-    background: rgba(171, 183, 183, 1);
+    background: rgba(46, 49, 49, 1);
     padding: 5px;
     border-radius: 3px;
 `;

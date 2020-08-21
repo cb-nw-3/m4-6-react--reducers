@@ -10,9 +10,16 @@ const Seat = ({ seatPrice, isSeatBooked, seatDescription }) => {
       content={`${seatDescription} - ${seatPrice} $`}
       disabled={isSeatBooked}
     >
-      <img src={SeatSrc} alt="seat" />
+      <StyledButton disabled={isSeatBooked}>
+        <img src={SeatSrc} alt="seat" />
+      </StyledButton>
     </Tippy>
   );
 };
+
+const StyledButton = styled.button`
+  border: none;
+  cursor: pointer;
+`;
 
 export default Seat;

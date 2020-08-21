@@ -7,6 +7,7 @@ import { range } from "../utils";
 import seatSrc from "../assets/seat-available.svg";
 import Tippy from "@tippyjs/react";
 import { COLORS } from "../theme";
+import Seat from "./Seat";
 
 const TicketWidget = () => {
   const { state } = useContext(SeatContext);
@@ -28,29 +29,13 @@ const TicketWidget = () => {
                   const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
                   return (
                     <SeatWrapper key={seatId}>
-                      <TippyF
-                        content={`Row ${rowName}, seat ${getSeatNum(
-                          seatIndex
-                        )} - $${state.seats[seatId].price}`}
-                      >
-                        {
-                          <SeatImg
-                            alt={`seat ${seatId} is ${
-                              state.seats[seatId].isBooked
-                                ? "booked"
-                                : "available"
-                            }`}
-                            src={seatSrc}
-                            style={
-                              state.seats[seatId].isBooked
-                                ? {
-                                    filter: "grayscale(100%)",
-                                  }
-                                : {}
-                            }
-                          />
-                        }
-                      </TippyF>
+                      <Seat
+                        seatId={seatId}
+                        rowName={rowName}
+                        seatIndex={getSeatNum(seatIndex)}
+                        price={state.seats[seatId].price}
+                        isBooked={state.seats[seatId].isBooked}
+                      />
                     </SeatWrapper>
                   );
                 })}
@@ -66,25 +51,6 @@ const TicketWidget = () => {
     </>
   );
 };
-
-const TippyF = styled(Tippy)`
-  background-color: ${COLORS.secondary};
-  padding: 6px 10px;
-  border-radius: 6px;
-  &:after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    width: 0;
-    height: 0;
-    border-top: solid 15px ${COLORS.secondary};
-    border-left: solid 15px transparent;
-    border-right: solid 15px transparent;
-  }
-`;
 
 const Wrapper = styled.div`
   width: fit-content;
@@ -113,7 +79,5 @@ const SeatWrapper = styled.div`
   padding: 5px;
   background-color: white;
 `;
-
-const SeatImg = styled.img``;
 
 export default TicketWidget;

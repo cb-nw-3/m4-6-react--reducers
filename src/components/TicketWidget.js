@@ -1,18 +1,28 @@
 import React from "react";
 import styled from "styled-components";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import Seat from "./Seat";
 
 import { getRowName, getSeatNum } from "../helpers";
 import { range } from "../utils";
 
-const TicketWidget = ({ numOfRows, seatsPerRow }) => {
-  console.log(numOfRows);
-  // TODO: use values from Context
-  // const numOfRows = 6;
-  // const seatsPerRow = 6;
-
+const TicketWidget = ({ numOfRows, seatsPerRow, hasLoaded }) => {
   // TODO: implement the loading spinner <CircularProgress />
   // with the hasLoaded flag
+  if (!hasLoaded) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <CircularProgress />
+      </div>
+    );
+  }
 
   return (
     <Wrapper>
@@ -24,10 +34,9 @@ const TicketWidget = ({ numOfRows, seatsPerRow }) => {
             <RowLabel>Row {rowName}</RowLabel>
             {range(seatsPerRow).map((seatIndex) => {
               const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
-
               return (
                 <SeatWrapper key={seatId}>
-                  {/* TODO: Render the actual <Seat /> */}
+                  <Seat seat={seatId} row={rowName} />
                 </SeatWrapper>
               );
             })}
@@ -39,15 +48,23 @@ const TicketWidget = ({ numOfRows, seatsPerRow }) => {
 };
 
 const Wrapper = styled.div`
+  width: 75%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   background: #eee;
   border: 1px solid #ccc;
   border-radius: 3px;
   padding: 8px;
+  margin: 10vh auto auto auto;
 `;
 
 const Row = styled.div`
   display: flex;
   position: relative;
+  justify-content: center;
+  align-items: center;
 
   &:not(:last-of-type) {
     border-bottom: 1px solid #ddd;
@@ -56,6 +73,8 @@ const Row = styled.div`
 
 const RowLabel = styled.div`
   font-weight: bold;
+  margin-right: 30px;
+  color: #222222;
 `;
 
 const SeatWrapper = styled.div`

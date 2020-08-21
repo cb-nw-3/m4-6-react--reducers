@@ -22,6 +22,7 @@ function App() {
       <TicketWidget
         numOfRows={state.numOfRows}
         seatsPerRow={state.seatsPerRow}
+        hasLoaded={state.hasLoaded}
       />
     </>
   );

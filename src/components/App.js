@@ -4,7 +4,7 @@ import GlobalStyles from "./GlobalStyles";
 import { SeatContext } from "./SeatContext";
 import TicketWidget from "./TicketWidget";
 import styled from "styled-components";
-
+import PurchaseModal from "./PurchaseModal";
 function App() {
   const {
     actions: { receiveSeatInfoFromServer },
@@ -19,10 +19,13 @@ function App() {
       });
   }, []);
   return (
-    <Wrapper>
+    <>
+      <PurchaseModal></PurchaseModal>
       <GlobalStyles />
-      <TicketWidget />
-    </Wrapper>
+      <Wrapper>
+        <TicketWidget />
+      </Wrapper>
+    </>
   );
 }
 

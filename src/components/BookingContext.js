@@ -19,6 +19,14 @@ function reducer(state, action) {
         selectedSeatId: action.seatId,
       };
     }
+    case "cancel-booking-process": {
+      return {
+        status: "idle",
+        error: null,
+        selectedSeatId: null,
+        price: null,
+      };
+    }
     default:
       throw new Error("Unrecognised Action");
   }
@@ -27,6 +35,7 @@ function reducer(state, action) {
 export const BookingContextProvider = ({ children }) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
   console.log("state Booking", state);
+
   const beginBookingProcess = (data) => {
     dispatch({
       type: "begin-booking-process",
@@ -34,11 +43,17 @@ export const BookingContextProvider = ({ children }) => {
     });
   };
 
+  const cancelBookingProcess = () => {
+    dispatch({
+      type: "cancel-booking-process",
+    });
+  };
+
   return (
     <BookingContext.Provider
       value={{
         state,
-        actions: { beginBookingProcess },
+        actions: { beginBookingProcess, cancelBookingProcess },
       }}
     >
       {children}

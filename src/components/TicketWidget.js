@@ -45,6 +45,7 @@ const TicketWidget = () => {
                         seatPrice={seatPrice}
                         isSeatBooked={isSeatBooked}
                         seatDescription={seatDescription}
+                        seatId={seatId}
                       />
                     </SeatWrapper>
                   );

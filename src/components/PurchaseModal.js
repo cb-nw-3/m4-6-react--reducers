@@ -12,8 +12,13 @@ import Button from "@material-ui/core/Button";
 
 const PurchaseModal = () => {
   const {
-    state: { price, selectedSeatId },
-    actions: { cancelBookingProcess },
+    state: { price, selectedSeatId, error },
+    actions: {
+      cancelBookingProcess,
+      purchaseTicketRequest,
+      purchaseTicketFailure,
+      purchaseTicketSuccess,
+    },
   } = React.useContext(BookingContext);
 
   const [creditCardInfo, setCreditCardInfo] = React.useState("");
@@ -73,11 +78,45 @@ const PurchaseModal = () => {
               }}
             />
           </CustomTextField2>
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              purchaseTicketRequest();
+              fetch("/api/book-seat", {
+                method: "POST",
+                body: JSON.stringify({
+                  seatId: selectedSeatId,
+                  creditCard: creditCardInfo,
+                  expiration: expiration,
+                }),
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json",
+                },
+              })
+                .then((res) => {
+                  if (!res.ok) {
+                    purchaseTicketFailure();
+                    throw Error("ticketFailure");
+                  }
+                  return res.json();
+                })
+                .then((data) => {
+                  if (data.success === true) {
+                    purchaseTicketSuccess();
+                  }
+                })
+                .catch((err) => console.log(err));
+            }}
+          >
             Purchase
           </Button>
         </ButtonField>
       </PaymentWrapper>
+      {error !== null && (
+        <div>An unknown error has occured, please try again</div>
+      )}
     </StyledDialog>
   );
 };

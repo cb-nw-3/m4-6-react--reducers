@@ -27,6 +27,24 @@ function reducer(state, action) {
         price: null,
       };
     }
+    case "purchase-ticket-request": {
+      return {
+        ...state,
+        status: "awaiting-response",
+      };
+    }
+
+    case "purchase-ticket-failure": {
+      return {
+        ...state,
+        status: "error",
+        error: "Please provide credit card info",
+      };
+    }
+
+    case "purchase-ticket-success": {
+      return initialState;
+    }
     default:
       throw new Error("Unrecognised Action");
   }
@@ -49,11 +67,34 @@ export const BookingContextProvider = ({ children }) => {
     });
   };
 
+  const purchaseTicketRequest = () => {
+    dispatch({
+      type: "purchase-ticket-request",
+    });
+  };
+
+  const purchaseTicketFailure = () => {
+    dispatch({
+      type: "purchase-ticket-failure",
+    });
+  };
+
+  const purchaseTicketSuccess = () => {
+    dispatch({
+      type: "purchase-ticket-success",
+    });
+  };
   return (
     <BookingContext.Provider
       value={{
         state,
-        actions: { beginBookingProcess, cancelBookingProcess },
+        actions: {
+          beginBookingProcess,
+          cancelBookingProcess,
+          purchaseTicketRequest,
+          purchaseTicketFailure,
+          purchaseTicketSuccess,
+        },
       }}
     >
       {children}

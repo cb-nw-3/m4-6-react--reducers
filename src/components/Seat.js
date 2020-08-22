@@ -23,7 +23,6 @@ const Seat = ({
   } = React.useContext(BookingContext);
 
   const handleClick = () => {
-    console.log(seatId);
     beginBookingProcess({ seatId, price });
   };
   return (

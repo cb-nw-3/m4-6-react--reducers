@@ -48,7 +48,6 @@ export const BookingProvider = ({ children }) => {
   };
 
   const cancelBookingProcess = () => {
-    console.log("hello");
     dispatch({ type: "cancel-booking-process" });
   };
 

@@ -10,7 +10,7 @@ const initialState = {
 };
 
 function reducer(state, action) {
-  console.log(action);
+  //console.log(action);
   switch (action.type) {
     case "begin-booking-process": {
       return {
@@ -58,7 +58,7 @@ function reducer(state, action) {
 const BookingProvider = ({ children }) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
-  console.log(state);
+  //console.log(state);
 
   const startBookingProcess = (data) => {
     //console.log("started booking process");

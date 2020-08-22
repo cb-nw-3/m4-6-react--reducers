@@ -11,6 +11,7 @@ import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { BookingContext } from "./BookingContext";
+import { SeatContext } from "./SeatContext";
 
 const PurchaseModal = () => {
   const {
@@ -23,8 +24,13 @@ const PurchaseModal = () => {
     },
   } = React.useContext(BookingContext);
 
+  const {
+    actions: { markSeatAsPurchased },
+  } = React.useContext(SeatContext);
+
   const [creditCard, setCreditCard] = React.useState("");
   const [expiration, setExpiration] = React.useState("");
+  const [errorMessage, setErrorMessage] = React.useState("");
 
   let ticketRow = "";
   let seatNumber = "";
@@ -81,8 +87,10 @@ const PurchaseModal = () => {
             .then((data) => {
               if (data.success) {
                 purchaseTicketSuccess();
+                markSeatAsPurchased({ seatId: selectedSeatId });
               } else {
-                //console.log(data);
+                console.log(data);
+                setErrorMessage(data.message);
                 purchaseTicketFailure(data);
               }
             });
@@ -109,6 +117,7 @@ const PurchaseModal = () => {
           {status === "awaiting-response" ? <CircularProgress /> : "PURCHASE"}
         </PurchaseButton>
       </Form>
+      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </Dialog>
   );
 };
@@ -143,6 +152,12 @@ const PurchaseButton = styled(Button)`
   height: 55px;
   background-color: hsl(256deg, 100%, 44%);
   color: white;
+`;
+
+const ErrorMessage = styled.p`
+  color: red;
+  text-align: center;
+  margin: 15px 0px;
 `;
 
 export default PurchaseModal;

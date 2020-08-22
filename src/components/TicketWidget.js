@@ -29,7 +29,11 @@ const TicketWidget = () => {
 
               return (
                 <SeatWrapper key={seatId}>
-                  <Seat isBooked={seats[seatId].isBooked} />
+                  <Seat
+                    isBooked={seats[seatId].isBooked}
+                    seatId={seatId}
+                    price={seats[seatId].price}
+                  />
                 </SeatWrapper>
               );
             })}

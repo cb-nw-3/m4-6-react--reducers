@@ -71,6 +71,7 @@ const PurchaseModal = () => {
         onSubmit={(ev) => {
           ev.preventDefault();
           requestPurchaseTicket();
+          setErrorMessage("");
           fetch("/api/book-seat", {
             method: "POST",
             body: JSON.stringify({

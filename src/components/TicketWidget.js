@@ -45,9 +45,9 @@ const TicketWidget = () => {
           <PurchaseModal open={selectedSeatId !== null} />
         </Wrapper>
       ) : (
-        <div>
-          <CircularProgress /> LOADING
-        </div>
+        <LoadingWrapper>
+          <CircularProgress /> LOADING...
+        </LoadingWrapper>
       )}
     </>
   );
@@ -61,6 +61,13 @@ const Wrapper = styled.div`
   padding: 8px;
 `;
 
+const LoadingWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
+`;
 const Row = styled.div`
   display: flex;
   position: relative;

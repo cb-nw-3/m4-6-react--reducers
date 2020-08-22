@@ -42,11 +42,6 @@ const PurchaseModal = ({ open }) => {
 
   const [creditCard, setCreditCard] = useState("");
   const [expiration, setExpiration] = useState("");
-
-  const {
-    actions: { markSeatAsPurchased },
-  } = React.useContext(SeatContext);
-
   const classes = useStyles();
 
   const currentSelectedSeat = decodeSeatId(selectedSeatId);
@@ -116,12 +111,12 @@ const PurchaseModal = ({ open }) => {
               expiration,
             })
               .then((data) => {
-                console.log("THEN==>", data);
                 if (data.status === 200) {
                   purchaseTicketSuccess();
                   setCreditCard("");
                   setExpiration("");
                 } else {
+                  console.log("MESSAGE FROM POSTIN TX ==>", data);
                   purchaseTicketFailure({ error: data.message });
                 }
               })

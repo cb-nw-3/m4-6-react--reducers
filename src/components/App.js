@@ -5,7 +5,6 @@ import TicketWidget from "./TicketWidget";
 
 function App() {
   const {
-    state: { numOfRows },
     actions: { receiveSeatInfoFromServer },
   } = useContext(SeatContext);
 
@@ -18,7 +17,6 @@ function App() {
   return (
     <>
       <GlobalStyles />
-      This venue has {numOfRows} rows!
       <TicketWidget />
     </>
   );

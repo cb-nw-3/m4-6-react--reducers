@@ -14,7 +14,7 @@ const Seat = ({ seatId, rowName, seatIndex, price, isBooked }) => {
   return (
     <TippyF content={`Row ${rowName}, seat ${seatIndex} - $${price}`}>
       <div>
-        <button
+        <Button
           disabled={isBooked}
           onClick={() => {
             beginBookingProcess({ seatId, price });
@@ -31,7 +31,7 @@ const Seat = ({ seatId, rowName, seatIndex, price, isBooked }) => {
                 : {}
             }
           />
-        </button>
+        </Button>
       </div>
     </TippyF>
   );
@@ -54,6 +54,13 @@ const TippyF = styled(Tippy)`
     border-left: solid 15px transparent;
     border-right: solid 15px transparent;
   }
+`;
+
+const Button = styled.button`
+  outline: none;
+  border: none;
+  padding: 0;
+  background: transparent;
 `;
 
 const SeatImg = styled.img``;

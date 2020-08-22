@@ -8,13 +8,19 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { BookingContext } from "./BookingContext";
 
 const PurchaseModal = () => {
   const {
-    state: { selectedSeatId, price },
-    actions: { cancelBookingProcess },
+    state: { selectedSeatId, price, status },
+    actions: {
+      cancelBookingProcess,
+      requestPurchaseTicket,
+      purchaseTicketFailure,
+      purchaseTicketSuccess,
+    },
   } = React.useContext(BookingContext);
 
   const [creditCard, setCreditCard] = React.useState("");
@@ -55,7 +61,33 @@ const PurchaseModal = () => {
           </TableRow>
         </TableBody>
       </TicketTable>
-      <Form>
+      <Form
+        onSubmit={(ev) => {
+          ev.preventDefault();
+          requestPurchaseTicket();
+          fetch("/api/book-seat", {
+            method: "POST",
+            body: JSON.stringify({
+              seatId: selectedSeatId,
+              creditCard: creditCard,
+              expiration: expiration,
+            }),
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.success) {
+                purchaseTicketSuccess();
+              } else {
+                //console.log(data);
+                purchaseTicketFailure(data);
+              }
+            });
+        }}
+      >
         <PaymentTitle>Enter payment details</PaymentTitle>
         <Input
           id="creditCard"
@@ -73,8 +105,8 @@ const PurchaseModal = () => {
             setExpiration(ev.target.value);
           }}
         />
-        <PurchaseButton size="medium" variant="contained">
-          PURCHASE
+        <PurchaseButton size="medium" variant="contained" type="submit">
+          {status === "awaiting-response" ? <CircularProgress /> : "PURCHASE"}
         </PurchaseButton>
       </Form>
     </Dialog>

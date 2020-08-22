@@ -44,6 +44,7 @@ const TicketWidget = () => {
                     price={seat.price}
                     seatNum={getSeatNum(seatIndex)}
                     rowName={rowName}
+                    seatIndex={seatIndex}
                   />
                 </SeatWrapper>
               );

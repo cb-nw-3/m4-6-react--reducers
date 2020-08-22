@@ -1,16 +1,25 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import seatSrc from "../assets/seat-available.svg";
 import Tippy from "@tippyjs/react";
 import { COLORS } from "../theme";
-import PurchaseModal from "./PurchaseModal";
+
+import { BookingContext } from "./BookingContext";
 
 const Seat = ({ seatId, rowName, seatIndex, price, isBooked }) => {
-  const [open, setOpen] = useState(false);
+  const {
+    actions: { beginBookingProcess },
+  } = useContext(BookingContext);
+
   return (
     <TippyF content={`Row ${rowName}, seat ${seatIndex} - $${price}`}>
       <div>
-        <button disabled={isBooked} onClick={() => setOpen(true)}>
+        <button
+          disabled={isBooked}
+          onClick={() => {
+            beginBookingProcess({ seatId, price });
+          }}
+        >
           <SeatImg
             alt={`seat ${seatId} is ${isBooked ? "booked" : "available"}`}
             src={seatSrc}
@@ -23,7 +32,6 @@ const Seat = ({ seatId, rowName, seatIndex, price, isBooked }) => {
             }
           />
         </button>
-        <PurchaseModal open={open} setOpen={setOpen} />
       </div>
     </TippyF>
   );

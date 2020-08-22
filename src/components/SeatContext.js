@@ -12,7 +12,6 @@ const initialState = {
 function reducer(state, action) {
   switch (action.type) {
     case "receive-seat-info-from-server":
-      console.log("data from reducer", state);
       return { ...state, ...action, hasLoaded: true };
     default:
       throw new Error("Unrecognized action");

@@ -8,15 +8,14 @@ import { getRowName, getSeatNum } from "../helpers";
 import { range } from "../utils";
 
 const TicketWidget = () => {
-  // TODO: use values from Context
   const { state } = React.useContext(SeatContext);
 
-  console.log("state", state);
-
-  const { numOfRows, seatsPerRow, hasLoaded } = state;
+  const { numOfRows, seatsPerRow, hasLoaded, seats } = state;
 
   return !hasLoaded ? (
-    <CircularProgress />
+    <SpinnerWrapper>
+      <CircularProgress />
+    </SpinnerWrapper>
   ) : (
     <Wrapper>
       {range(numOfRows).map((rowIndex) => {
@@ -30,7 +29,7 @@ const TicketWidget = () => {
 
               return (
                 <SeatWrapper key={seatId}>
-                  <Seat />
+                  <Seat isBooked={seats[seatId].isBooked} />
                 </SeatWrapper>
               );
             })}
@@ -63,6 +62,13 @@ const RowLabel = styled.div`
 
 const SeatWrapper = styled.div`
   padding: 5px;
+`;
+
+const SpinnerWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 `;
 
 export default TicketWidget;

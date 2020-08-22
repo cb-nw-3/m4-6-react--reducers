@@ -10,10 +10,9 @@ const initialState = {
 };
 
 function reducer(state, action) {
-  //   console.log(action);
+  console.log(action);
   switch (action.type) {
     case "begin-booking-process": {
-      console.log(action);
       return {
         ...state,
         status: "seat-selected",
@@ -22,7 +21,6 @@ function reducer(state, action) {
       };
     }
     case "cancel-booking-process": {
-      console.log(action);
       return {
         status: "idle",
         selectedSeatId: null,
@@ -39,15 +37,15 @@ const BookingProvider = ({ children }) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
   const startBookingProcess = (data) => {
-    console.log("started booking process");
+    //console.log("started booking process");
     dispatch({
       type: "begin-booking-process",
       ...data,
     });
   };
 
-  const cancelBookingProcess = (data) => {
-    console.log("started booking process");
+  const cancelBookingProcess = () => {
+    //console.log("cancel booking process");
     dispatch({
       type: "cancel-booking-process",
     });

@@ -6,7 +6,7 @@ import GlobalStyles from "./GlobalStyles";
 import { SeatContext } from "./SeatProvider";
 
 import TicketWidget from "./TicketWidget";
-
+import PurchaseModal from "./PurchaseModal";
 function App() {
   const {
     state: { numOfRows },
@@ -27,6 +27,7 @@ function App() {
       <Centered>
         <TicketWidget />
       </Centered>
+      <PurchaseModal />
     </>
   );
 }

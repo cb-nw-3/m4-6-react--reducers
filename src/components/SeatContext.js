@@ -21,6 +21,18 @@ function reducer(state, action) {
         seatsPerRow: action.seatsPerRow,
       };
     }
+    case "mark-seat-as-purchased": {
+      return {
+        ...state,
+        seats: {
+          ...state.seats,
+          [action.seatId]: {
+            ...state.seats[action.seatId],
+            isBooked: true,
+          },
+        },
+      };
+    }
     default: {
       throw new Error(`Unrecognized action: ${action.type}`);
     }
@@ -36,6 +48,9 @@ export const SeatProvider = ({ children }) => {
       ...data,
     });
   };
+  const markSeatAsPurchased = (seatId) => {
+    dispatch({ type: "mark-seat-as-purchased", seatId });
+  };
 
   return (
     <SeatContext.Provider
@@ -43,6 +58,7 @@ export const SeatProvider = ({ children }) => {
         state,
         actions: {
           receiveSeatInfoFromServer,
+          markSeatAsPurchased,
         },
       }}
     >

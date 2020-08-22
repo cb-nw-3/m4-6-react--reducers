@@ -2,6 +2,7 @@ import React from "react";
 import GlobalStyles from "./GlobalStyles";
 import { SeatContext } from "./SeatContext";
 import TicketWidget from "./TicketWidget";
+import PurchaseModal from "./PurchaseModal";
 
 function App() {
   const {
@@ -19,6 +20,7 @@ function App() {
     <>
       <GlobalStyles />
       <TicketWidget />
+      <PurchaseModal />
     </>
   );
 }

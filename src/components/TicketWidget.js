@@ -7,6 +7,7 @@ import { SeatContext } from "./SeatContext";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import Seat from "./Seat";
+import PurchaseModal from "./PurchaseModal";
 
 const TicketWidget = () => {
   const {
@@ -34,6 +35,7 @@ const TicketWidget = () => {
               return (
                 <SeatWrapper key={seatIndex}>
                   <Seat
+                    seatId={seatId}
                     rowIndex={rowIndex}
                     seatIndex={seatIndex}
                     width={36}

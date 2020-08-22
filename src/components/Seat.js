@@ -1,22 +1,37 @@
 import React from "react";
 import styled from "styled-components";
 // import { range } from "../utils";
-import { SeatContext } from "./SeatContext";
+import { BookingContext } from "./BookingContext";
 import SeatSvg from "../assets/seat-available.svg";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import { getRowName, getSeatNum } from "../helpers";
 
-const Seat = ({ rowIndex, seatIndex, width, height, price, status }) => {
+const Seat = ({
+  seatId,
+  rowIndex,
+  seatIndex,
+  width,
+  height,
+  price,
+  status,
+}) => {
   const rowName = getRowName(rowIndex);
   const seatNum = getSeatNum(seatIndex);
+  const {
+    actions: { beginBookingProcess },
+  } = React.useContext(BookingContext);
 
+  const handleClick = () => {
+    console.log(seatId);
+    beginBookingProcess({ seatId, price });
+  };
   return (
     <GreyTippy
       content={<span>{`Row ${rowName}, Seat ${seatNum} - $${price}`}</span>}
       arrow={true}
     >
-      <Wrapper disabled={status === "unavailable"}>
+      <Wrapper disabled={status === "unavailable"} onClick={handleClick}>
         <img alt="seat image" src={SeatSvg} style={{ width, height }} />
       </Wrapper>
     </GreyTippy>

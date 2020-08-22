@@ -14,10 +14,23 @@ import "tippy.js/animations/scale-subtle.css";
 import seatSrc from "../assets/seat-available.svg";
 import UnstyledButton from "./UnstyledButton";
 
-const Seat = (props) => {
+import { BookingContext } from "./BookingContext";
+import PurchaseModal from "./PurchaseModal";
+import { getRowName, getSeatNum, encodeSeatId } from "../helpers";
+
+const Seat = ({ rowIndex, seatIndex, price, isBooked }) => {
+  const {
+    actions: { beginBookingProcess },
+  } = React.useContext(BookingContext);
+
+  const rowName = getRowName(rowIndex);
+  const seatNum = getSeatNum(seatIndex);
+
+  const seatId = encodeSeatId(rowIndex, seatIndex);
+
   return (
     <Tippy
-      content={`Seat: ${props.rowName}-${props.seatNum}, Cost: $${props.price}`}
+      content={`Seat: ${rowName}-${seatNum}, Cost: $${price}`}
       placement="bottom"
       animation="scale-subtle"
       theme="material"
@@ -26,7 +39,12 @@ const Seat = (props) => {
       delay={[75, 0]}
       distance={8}
     >
-      <Wrapper disabled={props.isBooked}>
+      <Wrapper
+        disabled={isBooked}
+        onClick={() => {
+          beginBookingProcess({ seatId, price });
+        }}
+      >
         <img alt="seat" src={seatSrc} />
       </Wrapper>
     </Tippy>

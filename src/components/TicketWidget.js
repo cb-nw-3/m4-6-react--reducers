@@ -4,16 +4,12 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { SeatContext } from "./SeatContext";
 import { getRowName, getSeatNum } from "../helpers";
 import { range } from "../utils";
-import seatSrc from "../assets/seat-available.svg";
-import Tippy from "@tippyjs/react";
-import { COLORS } from "../theme";
 import Seat from "./Seat";
 
 const TicketWidget = () => {
   const { state } = useContext(SeatContext);
   const numOfRows = state.numOfRows;
   const seatsPerRow = state.seatsPerRow;
-  console.log(state);
 
   return (
     <>

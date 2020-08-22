@@ -25,7 +25,6 @@ const PurchaseModal = () => {
   const [creditCard, setCreditCard] = React.useState("");
   const [expiration, setExpiration] = React.useState("");
 
-  console.log(selectedSeatId, rowName, seatNum);
   return (
     <Dialog open={selectedSeatId !== null} onClose={cancelBookingProcess}>
       <Title>Purchase ticket</Title>
@@ -57,6 +56,7 @@ const PurchaseModal = () => {
             type="text"
             value={creditCard}
             style={{ flex: 2 }}
+            onChange={(ev) => setCreditCard(ev.target.value)}
           />
           <TextField
             variant="outlined"
@@ -64,6 +64,7 @@ const PurchaseModal = () => {
             type="text"
             value={expiration}
             style={{ flex: 1 }}
+            onChange={(ev) => setExpiration(ev.target.value)}
           />
           <PurchaseButton variant="contained" color="primary" type="submit">
             Purchase

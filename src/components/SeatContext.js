@@ -1,3 +1,4 @@
+import React from 'react';
 //Used to subscribe to the data held within this context
 export const SeatContext = React.createContext();
 
@@ -9,7 +10,19 @@ const initialState = {
 };
 
 function reducer(state,action){
-    //Need to complete this...
+    switch (action.type){
+        case 'receive-seat-info-from-server':
+            return {
+                //This puts all the initial values of the state and we will write over them
+                ...state,
+                hasLoaded: true,
+                seats: action.seats,
+                numOfRows: action.numOfRows,
+                seatsPerRow: action.seatsPerRow,
+            };
+        default:
+            throw new Error(`Unrecognized action: ${action.type}`);
+    }
 }
 
 export const SeatProvider = ({children}) => {

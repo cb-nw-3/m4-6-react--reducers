@@ -45,29 +45,28 @@ const TicketWidget = () => {
           <PurchaseModal open={selectedSeatId !== null} />
         </Wrapper>
       ) : (
-        <LoadingWrapper>
+        <Wrapper>
           <CircularProgress /> LOADING...
-        </LoadingWrapper>
+        </Wrapper>
       )}
     </>
   );
 };
 
 const Wrapper = styled.div`
-  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 50px;
+  width: 100vw;
+  height: 100vh;
   background: black;
   border: 1px solid #ccc;
   border-radius: 3px;
   padding: 8px;
 `;
 
-const LoadingWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding-top: 50px;
-`;
 const Row = styled.div`
   display: flex;
   position: relative;

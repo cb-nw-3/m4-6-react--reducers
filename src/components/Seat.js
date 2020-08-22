@@ -44,7 +44,7 @@ const TippyF = styled(Tippy)`
   &:after {
     content: "";
     position: absolute;
-    top: 100%;
+    top: 98%;
     left: 0;
     right: 0;
     margin: 0 auto;

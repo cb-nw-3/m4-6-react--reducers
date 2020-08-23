@@ -9,7 +9,14 @@ export const Seat = ({ isBooked, seatId, price }) => {
   const arr = seatId.split("-");
   const row = arr[0];
   const seat = arr[1];
-  const { beginBookingProcess } = React.useContext(BookingContext);
+
+  const {
+    actions: { beginBookingProcess },
+  } = React.useContext(BookingContext);
+
+  const handleClick = () => {
+    beginBookingProcess(seatId);
+  };
 
   return isBooked ? (
     <StyledButton disabled={true}>
@@ -27,7 +34,7 @@ export const Seat = ({ isBooked, seatId, price }) => {
         </span>
       }
     >
-      <StyledButton onClick={beginBookingProcess}>
+      <StyledButton onClick={handleClick}>
         <StyledSeat src={seatSrc} alt="seat" />
       </StyledButton>
     </Tippy>

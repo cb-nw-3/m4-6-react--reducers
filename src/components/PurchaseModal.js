@@ -2,6 +2,8 @@ import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import SimpleTable from "./SimpleTable";
+
 import { makeStyles } from "@material-ui/core/styles";
 
 import { BookingContext } from "./BookingContext";
@@ -27,6 +29,12 @@ const PurchaseModal = (props) => {
   } = React.useContext(BookingContext);
   const classes = useStyles();
 
+  const price = state.price;
+
+  const [creditCard, setCreditCard] = React.useState("");
+
+  const [expiration, setExpiration] = React.useState("");
+
   const handleClose = () => {
     cancelBookingProcess();
   };
@@ -40,9 +48,10 @@ const PurchaseModal = (props) => {
       <h1 style={{ padding: "27px 0 10px 27px" }}>Purchase ticket</h1>
       <p style={{ padding: "27px 0 10px 27px" }}>
         You're purchasing <span style={{ fontWeight: "bold" }}>1</span> ticket
-        for the price of ${state.price}
+        for the price of ${price}.
       </p>
-      <h3 style={{ padding: "0 0 0 27px", background: "gainsboro" }}>
+      <SimpleTable price={price} seatId={state.selectedSeatId} />
+      <h3 style={{ padding: "27px 0 0 27px", background: "gainsboro" }}>
         Enter payment details
       </h3>
       <div
@@ -51,6 +60,7 @@ const PurchaseModal = (props) => {
           alignItems: "center",
           padding: "20px",
           background: "gainsboro",
+          paddingBottom: "60px",
         }}
       >
         <form className={classes.root} noValidate autoComplete="off">
@@ -58,11 +68,13 @@ const PurchaseModal = (props) => {
             id="outlined-basic"
             label="Credit Card"
             variant="outlined"
+            onChange={(e) => setCreditCard(e.target.value)}
           />
           <TextField
             id="outlined-basic"
             label="Expiration"
             variant="outlined"
+            onChange={(e) => setExpiration(e.target.value)}
             style={{ width: "100px" }}
           />
         </form>

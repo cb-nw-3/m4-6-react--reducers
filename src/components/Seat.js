@@ -15,7 +15,7 @@ export const Seat = ({ isBooked, seatId, price }) => {
   } = React.useContext(BookingContext);
 
   const handleClick = () => {
-    beginBookingProcess(seatId);
+    beginBookingProcess(seatId, price);
   };
 
   return isBooked ? (

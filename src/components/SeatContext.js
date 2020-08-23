@@ -10,7 +10,6 @@ const initialState = {
 };
 
 function reducer(state, action) {
-  console.log('reducer',action)
   switch(action.type) {
     case 'receive-seat-info-from-server':
       return {

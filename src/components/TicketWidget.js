@@ -27,6 +27,7 @@ const TicketWidget = () => {
                 const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
                 return (
                   <Seat
+                    key={`${rowIndex}${seatIndex}`}
                     rowIndex={rowIndex}
                     seatIndex={seatIndex}
                     width={36}

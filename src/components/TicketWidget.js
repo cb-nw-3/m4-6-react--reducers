@@ -15,9 +15,6 @@ const TicketWidget = () => {
                 seatsPerRow },
   } = React.useContext(SeatContext);
 
-  console.log(hasLoaded);
-  console.log(seatsPerRow);
-
   // TODO: implement the loading spinner <CircularProgress />
   // with the hasLoaded flag
   if(hasLoaded === false){
@@ -41,8 +38,18 @@ const TicketWidget = () => {
                 const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
 
                 return (
-                  <SeatWrapper key={seatId}>
-                    <Seat src={seatImage} alt='seat-icon'/>
+                  <SeatWrapper 
+                    key={seatId}
+                    // I forgot that disabled attribute was a thing...
+                    disabled={seats[`${seatId}`].isBooked}
+                    // availability = { ? 'booked' : 'notBooked'}
+                    >
+                    <Seat 
+                      src={seatImage}
+                      alt='seat-icon'
+                      rowIndex={rowIndex}
+                      seatIndex={seatIndex}
+                    />
                   </SeatWrapper>
                 );
               })}
@@ -101,10 +108,19 @@ const RowLabel = styled.div`
 const Seat = styled.img`
   width: 50px;
   height: 50px;
-`
+`;
 
-const SeatWrapper = styled.div`
+const SeatWrapper = styled.button`
   padding: 5px;
+  display: inline-block;
+  border: none;
+  margin: 0;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:disabled {
+    filter: grayscale(100%);
+  }
 `;
 
 export default TicketWidget;

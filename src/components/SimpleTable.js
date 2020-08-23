@@ -16,11 +16,15 @@ const useStyles = makeStyles({
 
 const SimpleTable = ({ price, seatId }) => {
   const classes = useStyles();
-  const arr = seatId.split("-");
+
+  let arr = [];
+  if (seatId !== null) {
+    arr = seatId.split("-");
+  }
   const row = arr[0];
   const seat = arr[1];
 
-  return (
+  return seatId !== null ? (
     <TableContainer
       component={Paper}
       style={{ display: "flex", justifyContent: "center", margin: "30px" }}
@@ -36,15 +40,15 @@ const SimpleTable = ({ price, seatId }) => {
         <TableBody>
           <TableRow>
             <TableCell component="th" scope="row">
-              {row}
+              {row ? row : ""}
             </TableCell>
-            <TableCell>{seat}</TableCell>
+            <TableCell>{seat ? seat : ""}</TableCell>
             <TableCell>${price}</TableCell>
           </TableRow>
         </TableBody>
       </Table>
     </TableContainer>
-  );
+  ) : null;
 };
 
 export default SimpleTable;

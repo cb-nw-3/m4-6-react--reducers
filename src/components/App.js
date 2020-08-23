@@ -1,5 +1,6 @@
 import React from 'react';
 import {SeatContext} from './SeatContext';
+import TicketWidget from './TicketWidget';
 
 import GlobalStyles from './GlobalStyles';
 
@@ -17,8 +18,8 @@ function App() {
 
   return (
     <>
+      <TicketWidget />
       <GlobalStyles />
-      This venue has {numOfRows} rows!
     </>
   );
 }

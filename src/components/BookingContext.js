@@ -28,6 +28,29 @@ function reducer(state, action) {
         price: null,
       };
     }
+    case "purchase-ticket-request": {
+      return {
+        ...state,
+        status: "awaiting-response",
+        error: null,
+      };
+    }
+    case "purchase-ticket-failure": {
+      return {
+        ...state,
+        status: "error",
+        error: action.message,
+      };
+    }
+    case "purchase-ticket-success": {
+      return {
+        ...state,
+        status: "purchased",
+        error: null,
+        selectedSeatId: null,
+        price: null,
+      };
+    }
     default: {
       throw new Error(`Unrecognized action: ${action.type}`);
     }
@@ -51,6 +74,25 @@ export const BookingProvider = ({ children }) => {
     dispatch({ type: "cancel-booking-process" });
   };
 
+  const purchaseTicketRequest = () => {
+    dispatch({
+      type: "purchase-ticket-request",
+    });
+  };
+
+  const purchaseTicketFailure = ({ message }) => {
+    dispatch({
+      type: "purchase-ticket-failure",
+      message,
+    });
+  };
+
+  const purchaseTicketSuccess = () => {
+    dispatch({
+      type: "purchase-ticket-success",
+    });
+  };
+
   return (
     <BookingContext.Provider
       value={{
@@ -58,6 +100,9 @@ export const BookingProvider = ({ children }) => {
         actions: {
           beginBookingProcess,
           cancelBookingProcess,
+          purchaseTicketRequest,
+          purchaseTicketFailure,
+          purchaseTicketSuccess,
         },
       }}
     >

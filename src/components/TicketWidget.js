@@ -15,12 +15,18 @@ const TicketWidget = () => {
                 seatsPerRow },
   } = React.useContext(SeatContext);
 
-  console.log(numOfRows);
+  console.log(hasLoaded);
   console.log(seatsPerRow);
 
   // TODO: implement the loading spinner <CircularProgress />
   // with the hasLoaded flag
-
+  if(hasLoaded === false){
+    return (
+      <Wrapper>
+        <CircularProgress />
+      </Wrapper>
+    )
+  }
   return (
     <Wrapper>
       {range(numOfRows).map(rowIndex => {

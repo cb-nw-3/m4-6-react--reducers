@@ -8,8 +8,10 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import { BookingContext } from "./BookingContext";
+import { SeatContext } from "./SeatContext";
 import { decodeSeatId } from "../helpers";
 
 const PurchaseModal = () => {
@@ -18,8 +20,15 @@ const PurchaseModal = () => {
     error,
     selectedSeatId,
     price,
-    actions: { cancelBookingProcess },
+    actions: {
+      cancelBookingProcess,
+      purchaseTicketRequest,
+      purchaseTicketFailure,
+      purchaseTicketSuccess,
+    },
   } = React.useContext(BookingContext);
+
+  const { markSeatAsPurchased } = React.useContext(SeatContext);
 
   const { rowName, seatNum } = decodeSeatId(selectedSeatId);
   const [creditCard, setCreditCard] = React.useState("");
@@ -47,7 +56,37 @@ const PurchaseModal = () => {
           </TableRow>
         </TableBody>
       </TicketTable>
-      <Form>
+      <Form
+        OnSubmit={(ev) => {
+          ev.preventDefault();
+          purchaseTicketRequest();
+
+          fetch("/api/book-seat", {
+            method: "POST",
+            headers: {
+              "Content-type": "application/json",
+            },
+            body: JSON.stringify({
+              creditCard,
+              expiration,
+              seatId: selectedSeatId,
+            }),
+          })
+            .then((res) => res.json())
+            .then((json) => {
+              if (json.success) {
+                purchaseTicketSuccess();
+                markSeatAsPurchased(selectedSeatId);
+              } else {
+                purchaseTicketFailure(json.message);
+              }
+            })
+            .catch((err) => {
+              console.log(err);
+              purchaseTicketFailure("Unknown error occurred!");
+            });
+        }}
+      >
         <FormTitle>Enter payment details</FormTitle>
         <Row>
           <TextField
@@ -67,7 +106,7 @@ const PurchaseModal = () => {
             onChange={(ev) => setExpiration(ev.target.value)}
           />
           <PurchaseButton variant="contained" color="primary" type="submit">
-            Purchase
+            {status === "awaiting-response" ? <CircularProgress /> : "Purchase"}
           </PurchaseButton>
         </Row>
       </Form>
@@ -100,5 +139,9 @@ const Row = styled.div`
 `;
 const PurchaseButton = styled(Button)`
   color: white;
+`;
+const Error = styled.div`
+  color: red;
+  padding: 15px 5px;
 `;
 export default PurchaseModal;

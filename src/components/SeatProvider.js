@@ -23,6 +23,21 @@ function reducer(state, action) {
       console.log("the results are stored as:", results);
       return results;
     }
+
+    case "mark-seat-as-purchased": {
+      const results = {
+        ...state,
+        seats: {
+          ...state.seats,
+          [action.seatId]: {
+            ...state.seats[action.seatId],
+            isBooked: true,
+          },
+        },
+      };
+      console.log("the results are stored as:", results);
+      return results;
+    }
     default:
       throw new Error(`Unrecognized action: ${action.type}`);
   }
@@ -38,12 +53,22 @@ const SeatProvider = ({ children }) => {
     });
   }
 
+  const markedSeatAsPurchased = React.useCallback(
+    (seatId) =>
+      dispatch({
+        type: "mark-seat-as-purchased",
+        seatId,
+      }),
+    [dispatch]
+  );
+
   return (
     <SeatContext.Provider
       value={{
         state,
         actions: {
           receiveSeatInfoFromServer,
+          markedSeatAsPurchased,
         },
       }}
     >

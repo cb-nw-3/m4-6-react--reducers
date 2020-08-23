@@ -29,39 +29,63 @@ const TicketWidget = () => {
   }
   return (
     <Wrapper>
-      {range(numOfRows).map(rowIndex => {
+      <SeatMap>
+        {range(numOfRows).map(rowIndex => {
         const rowName = getRowName(rowIndex);
 
         return (
-          <Row key={rowIndex}>
+          <RowWrapper>
             <RowLabel>Row {rowName}</RowLabel>
-            {range(seatsPerRow).map(seatIndex => {
-              const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
+            <Row key={rowIndex}>
+              {range(seatsPerRow).map(seatIndex => {
+                const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
 
-              return (
-                <SeatWrapper key={seatId}>
-                  {/* TODO: Rendering the seats */}
-                  <Seat src={seatImage} alt='seat-icon'/>
-                </SeatWrapper>
-              );
-            })}
-          </Row>
+                return (
+                  <SeatWrapper key={seatId}>
+                    <Seat src={seatImage} alt='seat-icon'/>
+                  </SeatWrapper>
+                );
+              })}
+            </Row>
+          </RowWrapper>
+
         );
       })}
+      </SeatMap>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width:100%;
+  display: flex;
+  justify-content: center;
+  align-items: center
+`;
+
+const SeatMap = styled.div`
   background: #eee;
   border: 1px solid #ccc;
   border-radius: 3px;
   padding: 8px;
+  width: 552pt;
 `;
 
+const RowWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`
+
 const Row = styled.div`
+  position:relative;
+  right: 30px;
+  align-items:center;
   display: flex;
   position: relative;
+  flex-direction: row;
 
   &:not(:last-of-type) {
     border-bottom: 1px solid #ddd;
@@ -69,6 +93,8 @@ const Row = styled.div`
 `;
 
 const RowLabel = styled.div`
+  position:relative;
+  right: 60px;
   font-weight: bold;
 `;
 

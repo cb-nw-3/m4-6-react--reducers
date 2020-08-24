@@ -109,7 +109,11 @@ const PurchaseModal = () => {
             onChange={(ev) => setExpiration(ev.target.value)}
           />
           <PurchaseButton variant="contained" color="primary" type="submit">
-            {status === "awaiting-response" ? <CircularProgress /> : "Purchase"}
+            {status === "awaiting-response" ? (
+              <CircularProgress size={24} />
+            ) : (
+              "Purchase"
+            )}
           </PurchaseButton>
         </Row>
         {error && <Error>{error}</Error>}

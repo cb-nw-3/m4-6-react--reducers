@@ -16,8 +16,8 @@ function reducer(state, action) {
         ...state,
         status: "started",
         error: null,
-        selectedSeatId: null,
-        price: null,
+        selectedSeatId: action.selectedSeatId,
+        price: action.price,
       };
     default:
       throw new Error(`Action non reconnue ${action.type}`);
@@ -27,11 +27,18 @@ function reducer(state, action) {
 export const BookingProvider = ({ children }) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
-  const receiveSeatInfoFromServer = (data) => {
-    dispatch({
-      type: "begin-booking-process",
-      ...data,
-    });
+  const beginBookingProcess = React.useCallback(
+    ({ seatId, seatPrice }) =>
+      dispatch({
+        type: "begin-booking-process",
+        seatId,
+        seatPrice,
+      }),
+    [dispatch]
+  );
+
+  const bookingProcessSuccess = (data) => {
+    dispatch();
   };
 
   return (
@@ -39,7 +46,7 @@ export const BookingProvider = ({ children }) => {
       value={{
         state,
         actions: {
-          receiveSeatInfoFromServer,
+          beginBookingProcess,
         },
       }}
     >

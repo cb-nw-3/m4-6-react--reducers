@@ -4,6 +4,7 @@ import styled from "styled-components";
 import GlobalStyles from "./GlobalStyles";
 import { SeatContext } from "./SeatContext";
 import TicketWidget from "../components/TicketWidget";
+import PurchaseModal from './PurchaseModal';
 
 function App() {
   const {
@@ -20,6 +21,8 @@ function App() {
     <Wrapper>
       <GlobalStyles />
       <TicketWidget></TicketWidget>
+      <PurchaseModal/>
+
     </Wrapper>
   );
 }

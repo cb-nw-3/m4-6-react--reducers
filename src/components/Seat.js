@@ -2,12 +2,23 @@ import React from "react";
 import styled from "styled-components";
 import Tippy from "@tippyjs/react";
 
-import { getSeatNum } from "../helpers";
+import { getSeatNum, encodeSeatId } from "../helpers";
 import seatSrc from "../assets/seat-available.svg";
+import { BookingContext } from "./BookingContext";
 
 const Seat = (props) => {
+  const {
+    state: { status, error, selectedSeatId, price },
+    actions: { beginBookingProcess },
+  } = React.useContext(BookingContext);
+
+  const seatId = encodeSeatId(props.rowIndex + 1, props.seatIndex);
+  const seatPrice = props.price;
   return (
-    <StyledButton disabled={props.status === "available" ? false : true}>
+    <StyledButton
+      disabled={props.status === "available" ? false : true}
+      onClick={() => beginBookingProcess({ seatId, seatPrice })}
+    >
       <SeatWrapper key={props.rowIndex + props.seatIndex}>
         {props.status === "available" ? (
           <StyledTippy

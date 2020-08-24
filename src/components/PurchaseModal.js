@@ -13,17 +13,18 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 const PurchaseModal = () => {
   const {
     state: { status, error, selectedSeatId, price },
+    actions: {beginBookingProcess}
   } = React.useContext(BookingContext);
+
+  const [creditCard, setCreditCard] = React.useState("");
+  const [expiration, setExpiration] = React.useState("");
 
   const handleClickOpen = () => {};
 
   const handleClose = () => {};
-
+  console.log('selectedSeatId', selectedSeatId)
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open form dialog
-      </Button>
       <Dialog
         open={selectedSeatId !== null}
         onClose={handleClose}
@@ -40,9 +41,9 @@ const PurchaseModal = () => {
                 <p>Price</p>
               </div>
               <div>
-                <p>{Row}</p>
-                <p>{Seat}</p>
-                <p>{Price}</p>
+                <p>Row</p>
+                <p>Seat</p>
+                <p>Price</p>
               </div>
             </TicketTable>
           </DialogContentText>
@@ -79,5 +80,7 @@ const PurchaseModal = () => {
 };
 
 const TicketTable = styled.div``;
+const ModalInput = styled.div``
+const CreditCardContainer = styled.div``
 
 export default PurchaseModal;

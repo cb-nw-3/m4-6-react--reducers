@@ -5,12 +5,18 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import { getRowName, getSeatNum } from "../helpers";
 import { range } from "../utils";
 import { SeatContext } from "./SeatContext";
+import { BookingContext } from "./BookingContext";
 import Seat from "./Seat";
 
 const TicketWidget = () => {
   const {
     state: { numOfRows, seatsPerRow, hasLoaded, seats },
   } = React.useContext(SeatContext);
+  const {
+    state: { status, error, selectedSeatId, price },
+    actions: { beginBookingProcess },
+  } = React.useContext(BookingContext);
+
 
   return (
     <Wrapper>

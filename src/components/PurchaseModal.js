@@ -16,8 +16,9 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import { decodeSeatId } from "../helpers";
+import MuiAlert from "@material-ui/lab/Alert";
 
+import { decodeSeatId } from "../helpers";
 import { COLORS } from "../theme";
 import { Container } from "@material-ui/core";
 
@@ -152,11 +153,18 @@ const PurchaseModal = ({ open }) => {
           </Button>
         </DialogActions>
       </Container>
-      <div>{error}</div>
-      <div>{status}</div>
+      {error === null ? (
+        <Alert severity="info">Please complete the form</Alert>
+      ) : (
+        <Alert severity="error">{error}</Alert>
+      )}
     </Dialog>
   );
 };
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const postTransaction = async ({ seatId, creditCard, expiration }) => {
   const response = await fetch("api/book-seat", {

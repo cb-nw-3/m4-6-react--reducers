@@ -1,16 +1,32 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import seatSrc from "../assets/seat-available.svg";
 import Tippy from "@tippyjs/react";
 import { COLORS } from "../theme";
 import SimpleDialogDemo from "./PurchaseModal";
 
+import { BookingContext } from "./BookingContext";
+
 const Seat = ({ seatId, rowName, seatIndex, price, isBooked }) => {
+  const {
+    actions: { beginBookingProcess },
+  } = useContext(BookingContext);
+
   return (
     <TippyF content={`Row ${rowName}, seat ${seatIndex} - $${price}`}>
+<<<<<<< HEAD
       {
         <button disabled={isBooked}>
           <SimpleDialogDemo></SimpleDialogDemo>
+=======
+      <div>
+        <Button
+          disabled={isBooked}
+          onClick={() => {
+            beginBookingProcess({ seatId, price });
+          }}
+        >
+>>>>>>> cb956e71ba9d0bb614344f5568862ced20d2d985
           <SeatImg
             alt={`seat ${seatId} is ${isBooked ? "booked" : "available"}`}
             src={seatSrc}
@@ -22,8 +38,8 @@ const Seat = ({ seatId, rowName, seatIndex, price, isBooked }) => {
                 : {}
             }
           />
-        </button>
-      }
+        </Button>
+      </div>
     </TippyF>
   );
 };
@@ -35,7 +51,7 @@ const TippyF = styled(Tippy)`
   &:after {
     content: "";
     position: absolute;
-    top: 100%;
+    top: 98%;
     left: 0;
     right: 0;
     margin: 0 auto;
@@ -45,6 +61,13 @@ const TippyF = styled(Tippy)`
     border-left: solid 15px transparent;
     border-right: solid 15px transparent;
   }
+`;
+
+const Button = styled.button`
+  outline: none;
+  border: none;
+  padding: 0;
+  background: transparent;
 `;
 
 const SeatImg = styled.img``;

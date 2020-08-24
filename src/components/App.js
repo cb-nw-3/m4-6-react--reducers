@@ -5,7 +5,6 @@ import TicketWidget from "./TicketWidget";
 
 function App() {
   const {
-    state: { numOfRows },
     actions: { receiveSeatInfoFromServer },
   } = useContext(SeatContext);
 
@@ -13,12 +12,11 @@ function App() {
     fetch("/api/seat-availability")
       .then((res) => res.json())
       .then((data) => receiveSeatInfoFromServer(data));
-  }, []);
+  }, [receiveSeatInfoFromServer]);
 
   return (
     <>
       <GlobalStyles />
-      This venue has {numOfRows} rows!
       <TicketWidget />
     </>
   );

@@ -12,8 +12,11 @@ const Seat = (props) => {
     actions: { beginBookingProcess },
   } = React.useContext(BookingContext);
 
-  const seatId = encodeSeatId(props.rowIndex + 1, props.seatIndex);
+  const seatId = encodeSeatId(props.rowIndex, props.seatIndex);
   const seatPrice = props.price;
+
+  console.log('seat', seatId, seatPrice)
+
   return (
     <StyledButton
       disabled={props.status === "available" ? false : true}

@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Tippy from '@tippyjs/react';
 
 import { getRowName, getSeatNum } from '../helpers';
 import { range } from '../utils';
 import {SeatContext} from './SeatContext';
-import seatImage from '../assets/seat-available.svg';
+import Seat from './Seat';
+
 
 const TicketWidget = () => {
   //used values from Context
@@ -15,8 +17,6 @@ const TicketWidget = () => {
                 seatsPerRow },
   } = React.useContext(SeatContext);
 
-  // TODO: implement the loading spinner <CircularProgress />
-  // with the hasLoaded flag
   if(hasLoaded === false){
     return (
       <Wrapper>
@@ -36,26 +36,18 @@ const TicketWidget = () => {
             <Row key={rowIndex}>
               {range(seatsPerRow).map(seatIndex => {
                 const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
-
                 return (
-                  <SeatWrapper 
-                    key={seatId}
-                    // I forgot that disabled attribute was a thing...
-                    disabled={seats[`${seatId}`].isBooked}
-                    // availability = { ? 'booked' : 'notBooked'}
-                    >
-                    <Seat 
-                      src={seatImage}
-                      alt='seat-icon'
-                      rowIndex={rowIndex}
-                      seatIndex={seatIndex}
-                    />
-                  </SeatWrapper>
+                  <Seat
+                    seatId={seatId}
+                    rowIndex={rowIndex}
+                    seatIndex={seatIndex}
+                    price={seats[`${seatId}`].price}
+                    status={seats[`${seatId}`].isBooked}
+                  />
                 );
               })}
             </Row>
           </RowWrapper>
-
         );
       })}
       </SeatMap>
@@ -67,11 +59,13 @@ const Wrapper = styled.div`
   margin: 0;
   padding: 0;
   height: 100vh;
-  width:100%;
+  width:  100%;
   display: flex;
   justify-content: center;
   align-items: center
 `;
+
+
 
 const SeatMap = styled.div`
   background: #eee;
@@ -103,24 +97,6 @@ const RowLabel = styled.div`
   position:relative;
   right: 60px;
   font-weight: bold;
-`;
-
-const Seat = styled.img`
-  width: 50px;
-  height: 50px;
-`;
-
-const SeatWrapper = styled.button`
-  padding: 5px;
-  display: inline-block;
-  border: none;
-  margin: 0;
-  text-decoration: none;
-  cursor: pointer;
-
-  &:disabled {
-    filter: grayscale(100%);
-  }
 `;
 
 export default TicketWidget;

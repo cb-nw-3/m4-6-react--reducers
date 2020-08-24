@@ -25,7 +25,12 @@ const useStyles = makeStyles((theme) => ({
 const PurchaseModal = (props) => {
   const { state } = React.useContext(BookingContext);
   const {
-    actions: { cancelBookingProcess },
+    actions: {
+      cancelBookingProcess,
+      purchaseTicketRequest,
+      purchaseTicketFailure,
+      purchaseTicketSuccess,
+    },
   } = React.useContext(BookingContext);
   const classes = useStyles();
 
@@ -37,6 +42,30 @@ const PurchaseModal = (props) => {
 
   const handleClose = () => {
     cancelBookingProcess();
+  };
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    purchaseTicketRequest();
+
+    fetch("/api/book-seat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ seatId: state.seatId, creditCard, expiration }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        purchaseTicketSuccess({ ...data, creditCard, expiration });
+
+        setCreditCard("");
+        setExpiration("");
+      })
+      .catch((error) => {
+        purchaseTicketFailure(error);
+        console.error("Error:", error);
+      });
   };
 
   return (
@@ -82,6 +111,7 @@ const PurchaseModal = (props) => {
           <Button
             variant="contained"
             color="primary"
+            onClick={handleClick}
             style={{ height: "55px" }}
           >
             Purchase
@@ -89,6 +119,11 @@ const PurchaseModal = (props) => {
         </div>
       </div>
       <div style={{ height: "55px" }}></div>
+
+      {console.log(state.error)}
+      {state.error !== null ? (
+        <div style={{ color: "red" }}>{state.error}</div>
+      ) : null}
     </Dialog>
   );
 };

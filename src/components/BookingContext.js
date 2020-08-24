@@ -10,7 +10,6 @@ const initialState = {
 };
 
 function reducer(state, action) {
-  console.log("state from booking reducer", state);
   console.log("action from booking reducer", action);
   switch (action.type) {
     case "begin-booking-process":
@@ -24,6 +23,21 @@ function reducer(state, action) {
       return {
         status: "idle",
         error: null,
+        selectedSeatId: null,
+        price: null,
+      };
+    case "purchase-ticket-request":
+      return { ...state, status: "awaiting-response" };
+    case "purchase-ticket-failure":
+      return {
+        ...state,
+        status: "error",
+        error: action.message,
+      };
+    case "purchase-ticket-success":
+      return {
+        ...state,
+        status: "purchased",
         selectedSeatId: null,
         price: null,
       };
@@ -43,6 +57,18 @@ export const BookingProvider = ({ children }) => {
     dispatch({ type: "cancel-booking-process", seatId });
   };
 
+  const purchaseTicketRequest = () => {
+    dispatch({ type: "purchase-ticket-request" });
+  };
+
+  const purchaseTicketFailure = (error) => {
+    dispatch({ type: "purchase-ticket-failure", error });
+  };
+
+  const purchaseTicketSuccess = (data) => {
+    dispatch({ type: "purchase-ticket-success" }, data);
+  };
+
   return (
     <BookingContext.Provider
       value={{
@@ -50,6 +76,9 @@ export const BookingProvider = ({ children }) => {
         actions: {
           beginBookingProcess,
           cancelBookingProcess,
+          purchaseTicketRequest,
+          purchaseTicketFailure,
+          purchaseTicketSuccess,
         },
       }}
     >

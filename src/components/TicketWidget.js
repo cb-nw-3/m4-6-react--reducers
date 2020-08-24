@@ -17,38 +17,52 @@ const TicketWidget = () => {
       <CircularProgress />
     </SpinnerWrapper>
   ) : (
-    <Wrapper>
-      {range(numOfRows).map((rowIndex) => {
-        const rowName = getRowName(rowIndex);
+    <Container>
+      <Wrapper>
+        {range(numOfRows).map((rowIndex) => {
+          const rowName = getRowName(rowIndex);
 
-        return (
-          <Row key={rowIndex}>
-            <RowLabel>Row {rowName}</RowLabel>
-            {range(seatsPerRow).map((seatIndex) => {
-              const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
+          return (
+            <Row key={rowIndex}>
+              <RowLabel
+                style={{ position: "absolute", top: "20px", left: "-70px" }}
+              >
+                Row {rowName}
+              </RowLabel>
+              {range(seatsPerRow).map((seatIndex) => {
+                const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
 
-              return (
-                <SeatWrapper key={seatId}>
-                  <Seat
-                    isBooked={seats[seatId].isBooked}
-                    seatId={seatId}
-                    price={seats[seatId].price}
-                  />
-                </SeatWrapper>
-              );
-            })}
-          </Row>
-        );
-      })}
-    </Wrapper>
+                return (
+                  <SeatWrapper key={seatId}>
+                    <Seat
+                      isBooked={seats[seatId].isBooked}
+                      seatId={seatId}
+                      price={seats[seatId].price}
+                    />
+                  </SeatWrapper>
+                );
+              })}
+            </Row>
+          );
+        })}
+      </Wrapper>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
 
 const Wrapper = styled.div`
   background: #eee;
   border: 1px solid #ccc;
   border-radius: 3px;
   padding: 8px;
+  width: 860px;
 `;
 
 const Row = styled.div`

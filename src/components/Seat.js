@@ -23,7 +23,7 @@ export const Seat = ({ isBooked, seatId, price }) => {
       <StyledSeat
         src={seatSrc}
         alt="seat"
-        style={{ filter: isBooked && "grayscale(100%" }}
+        style={{ filter: isBooked && "grayscale(100%)" }}
       />
     </StyledButton>
   ) : (

@@ -28,7 +28,9 @@ const PurchaseModal = () => {
     },
   } = React.useContext(BookingContext);
 
-  const { markSeatAsPurchased } = React.useContext(SeatContext);
+  const {
+    actions: { markSeatAsPurchased },
+  } = React.useContext(SeatContext);
 
   const { rowName, seatNum } = decodeSeatId(selectedSeatId);
   const [creditCard, setCreditCard] = React.useState("");
@@ -64,7 +66,7 @@ const PurchaseModal = () => {
           fetch("/api/book-seat", {
             method: "POST",
             headers: {
-              "Content-type": "application/json",
+              "Content-Type": "application/json",
             },
             body: JSON.stringify({
               creditCard,
@@ -75,6 +77,7 @@ const PurchaseModal = () => {
             .then((res) => res.json())
             .then((json) => {
               if (json.success) {
+                console.log(json.success);
                 purchaseTicketSuccess();
                 markSeatAsPurchased(selectedSeatId);
               } else {
@@ -109,6 +112,7 @@ const PurchaseModal = () => {
             {status === "awaiting-response" ? <CircularProgress /> : "Purchase"}
           </PurchaseButton>
         </Row>
+        {error && <Error>{error}</Error>}
       </Form>
     </Dialog>
   );

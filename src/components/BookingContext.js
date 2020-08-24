@@ -51,6 +51,12 @@ function reducer(state, action) {
         price: null,
       };
     }
+    case "dismiss-snackbar": {
+      return {
+        ...state,
+        status: "idle",
+      };
+    }
     default: {
       throw new Error(`Unrecognized action: ${action.type}`);
     }
@@ -92,7 +98,11 @@ export const BookingProvider = ({ children }) => {
       type: "purchase-ticket-success",
     });
   };
-
+  const dismissSnackbar = () => {
+    dispatch({
+      type: "dismiss-snackbar",
+    });
+  };
   return (
     <BookingContext.Provider
       value={{
@@ -103,6 +113,7 @@ export const BookingProvider = ({ children }) => {
           purchaseTicketRequest,
           purchaseTicketFailure,
           purchaseTicketSuccess,
+          dismissSnackbar,
         },
       }}
     >

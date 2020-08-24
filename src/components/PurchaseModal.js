@@ -15,7 +15,13 @@ import { decodeSeatId } from "../helpers";
 const PurchaseModal = () => {
   const {
     state: { status, error, selectedSeatId, price },
-    actions: { beginBookingProcess },
+    actions: {
+      beginBookingProcess,
+      purchaseTicketRequest,
+      purchaseTicketFailure,
+      purchaseTicketSuccess,
+      cancelBookingProcess,
+    },
   } = React.useContext(BookingContext);
 
   const [creditCard, setCreditCard] = React.useState("");
@@ -25,13 +31,18 @@ const PurchaseModal = () => {
 
   const handleClickOpen = () => {};
 
-  const handleClose = () => {};
+  const handleClose = () => {
+    const creditCardInputType = typeof parseInt(creditCard) === "number";
+    if (creditCardInputType && creditCard.length === 16 && expiration.length !== 6) {
+      purchaseTicketFailure({ })
+    }
+  };
 
   return (
     <>
       <Dialog
         open={selectedSeatId !== null}
-        onClose={handleClose}
+        onClose={cancelBookingProcess}
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">Purchase ticket</DialogTitle>

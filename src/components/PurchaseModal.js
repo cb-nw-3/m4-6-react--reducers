@@ -58,38 +58,7 @@ const PurchaseModal = () => {
           </TableRow>
         </TableBody>
       </TicketTable>
-      <Form
-        OnSubmit={(ev) => {
-          ev.preventDefault();
-          purchaseTicketRequest();
-
-          fetch("/api/book-seat", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              creditCard,
-              expiration,
-              seatId: selectedSeatId,
-            }),
-          })
-            .then((res) => res.json())
-            .then((json) => {
-              if (json.success) {
-                console.log(json.success);
-                purchaseTicketSuccess();
-                markSeatAsPurchased(selectedSeatId);
-              } else {
-                purchaseTicketFailure(json.message);
-              }
-            })
-            .catch((err) => {
-              console.log(err);
-              purchaseTicketFailure("Unknown error occurred!");
-            });
-        }}
-      >
+      <Form>
         <FormTitle>Enter payment details</FormTitle>
         <Row>
           <TextField
@@ -108,7 +77,41 @@ const PurchaseModal = () => {
             style={{ flex: 1 }}
             onChange={(ev) => setExpiration(ev.target.value)}
           />
-          <PurchaseButton variant="contained" color="primary" type="submit">
+          <PurchaseButton
+            variant="contained"
+            color="primary"
+            type="submit"
+            onClick={(ev) => {
+              ev.preventDefault();
+              purchaseTicketRequest();
+
+              fetch("/api/book-seat", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  creditCard: creditCard,
+                  expiration: expiration,
+                  seatId: selectedSeatId,
+                }),
+              })
+                .then((res) => res.json())
+                .then((json) => {
+                  if (json.success) {
+                    console.log(json.success);
+                    purchaseTicketSuccess();
+                    markSeatAsPurchased(selectedSeatId);
+                  } else {
+                    purchaseTicketFailure(json.message);
+                  }
+                })
+                .catch((err) => {
+                  console.log(err);
+                  purchaseTicketFailure("Unknown error occurred!");
+                });
+            }}
+          >
             {status === "awaiting-response" ? (
               <CircularProgress size={24} />
             ) : (

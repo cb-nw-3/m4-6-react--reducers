@@ -3,12 +3,14 @@ import styled from "styled-components";
 import seatSrc from "../assets/seat-available.svg";
 import Tippy from "@tippyjs/react";
 import { COLORS } from "../theme";
+import SimpleDialogDemo from "./PurchaseModal";
 
 const Seat = ({ seatId, rowName, seatIndex, price, isBooked }) => {
   return (
     <TippyF content={`Row ${rowName}, seat ${seatIndex} - $${price}`}>
       {
         <button disabled={isBooked}>
+          <SimpleDialogDemo></SimpleDialogDemo>
           <SeatImg
             alt={`seat ${seatId} is ${isBooked ? "booked" : "available"}`}
             src={seatSrc}

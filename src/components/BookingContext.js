@@ -18,12 +18,8 @@ function reducer(state, action) {
         selectedSeatId: action.seatId,
         price: action.price,
       };
-<<<<<<< HEAD
-    case "cance-booking-process":
-=======
 
     case "cancel-booking-process":
->>>>>>> cb956e71ba9d0bb614344f5568862ced20d2d985
       return {
         ...state,
         status: "idle",
@@ -45,8 +41,6 @@ function reducer(state, action) {
         error: null,
       };
 
-<<<<<<< HEAD
-=======
     case "purchase-ticket-failure":
       return {
         ...state,
@@ -54,7 +48,6 @@ function reducer(state, action) {
         error: action.error,
       };
 
->>>>>>> cb956e71ba9d0bb614344f5568862ced20d2d985
     default:
       return state;
   }
@@ -70,8 +63,6 @@ export const BookingProvider = ({ children }) => {
       price,
     });
   };
-<<<<<<< HEAD
-=======
 
   const cancelBookingProcess = () => {
     dispatch({
@@ -98,14 +89,10 @@ export const BookingProvider = ({ children }) => {
     });
   };
 
->>>>>>> cb956e71ba9d0bb614344f5568862ced20d2d985
   return (
     <BookingContext.Provider
       value={{
         ...state,
-<<<<<<< HEAD
-        actions: { beginBookingProcess },
-=======
         actions: {
           beginBookingProcess,
           cancelBookingProcess,
@@ -113,7 +100,6 @@ export const BookingProvider = ({ children }) => {
           purchaseTicketSuccess,
           purchaseTicketFailure,
         },
->>>>>>> cb956e71ba9d0bb614344f5568862ced20d2d985
       }}
     >
       {children}

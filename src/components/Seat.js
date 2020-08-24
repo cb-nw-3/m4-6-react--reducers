@@ -14,11 +14,6 @@ const Seat = ({ seatId, rowName, seatIndex, price, isBooked }) => {
 
   return (
     <TippyF content={`Row ${rowName}, seat ${seatIndex} - $${price}`}>
-<<<<<<< HEAD
-      {
-        <button disabled={isBooked}>
-          <SimpleDialogDemo></SimpleDialogDemo>
-=======
       <div>
         <Button
           disabled={isBooked}
@@ -26,7 +21,6 @@ const Seat = ({ seatId, rowName, seatIndex, price, isBooked }) => {
             beginBookingProcess({ seatId, price });
           }}
         >
->>>>>>> cb956e71ba9d0bb614344f5568862ced20d2d985
           <SeatImg
             alt={`seat ${seatId} is ${isBooked ? "booked" : "available"}`}
             src={seatSrc}

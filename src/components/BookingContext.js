@@ -39,7 +39,7 @@ function reducer(state, action) {
       return {
         ...state,
         status: "error",
-        error: action.message,
+        error: "Please provide credit card info",
       };
     }
     case "purchase-ticket-success": {

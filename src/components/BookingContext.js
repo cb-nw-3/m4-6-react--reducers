@@ -29,7 +29,7 @@ function reducer(state, action) {
       return {
         ...state,
         status: "error",
-        error: "Please provide credit card information",
+        error: action.message,
       };
     case "purchase-ticket-success":
       return {
@@ -72,10 +72,10 @@ export const BookingProvider = ({ children }) => {
     [dispatch]
   );
   const purchaseTicketFailure = React.useCallback(
-    ({ errorMessage }) =>
+    ({ message }) =>
       dispatch({
         type: "purchase-ticket-failure",
-        errorMessage,
+        message: message,
       }),
     [dispatch]
   );

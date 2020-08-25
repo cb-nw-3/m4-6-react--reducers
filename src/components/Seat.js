@@ -23,7 +23,7 @@ const Seat = (props) => {
       <SeatWrapper key={props.rowIndex + props.seatIndex}>
         {props.status === "available" ? (
           <StyledTippy
-            content={`Row ${props.rowIndex}, seat ${getSeatNum(
+            content={`Row ${props.rowIndex + 1}, seat ${getSeatNum(
               props.seatIndex
             )} - ${props.price}$`}
           >

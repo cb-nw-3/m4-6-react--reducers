@@ -86,15 +86,16 @@ const PurchaseModal = () => {
               })
                 .then((res) => res.json())
                 .then((data) => {
+                  let errorMessage = data.message;
                   if (data.success) {
                     purchaseTicketSuccess();
                   } else {
-                    purchaseTicketFailure(data.errorMessage);
-                    console.log(data.errorMessage)
+                    purchaseTicketFailure(data.message);
+                    console.log(data.message)
                   }
                 })
                 .catch((err) => {
-                  console.log(err);
+                  console.log('catch',err);
                   purchaseTicketFailure("Alarm.Alarm.Alarm");
                 });
             }}

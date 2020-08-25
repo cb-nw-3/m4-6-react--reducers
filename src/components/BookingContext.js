@@ -10,7 +10,6 @@ const initialState = {
 };
 
 function reducer(state, action) {
-  console.log("action from booking reducer", action);
   switch (action.type) {
     case "begin-booking-process":
       return {
@@ -32,7 +31,7 @@ function reducer(state, action) {
       return {
         ...state,
         status: "error",
-        error: action.message,
+        error: action.error,
       };
     case "purchase-ticket-success":
       return {
@@ -40,6 +39,7 @@ function reducer(state, action) {
         status: "purchased",
         selectedSeatId: null,
         price: null,
+        error: null,
       };
     default:
       throw new Error("Unrecognized action");

@@ -32,6 +32,7 @@ const PurchaseModal = (props) => {
       purchaseTicketSuccess,
     },
   } = React.useContext(BookingContext);
+
   const classes = useStyles();
 
   const price = state.price;
@@ -53,17 +54,27 @@ const PurchaseModal = (props) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ seatId: state.seatId, creditCard, expiration }),
+      body: JSON.stringify({
+        seatId: state.selectedSeatId,
+        creditCard,
+        expiration,
+      }),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        return response.json();
+      })
       .then((data) => {
+        if (data.status >= 400) {
+          purchaseTicketFailure(data.message);
+          throw Error(data.message);
+        }
+
         purchaseTicketSuccess({ ...data, creditCard, expiration });
 
         setCreditCard("");
         setExpiration("");
       })
       .catch((error) => {
-        purchaseTicketFailure(error);
         console.error("Error:", error);
       });
   };
@@ -118,12 +129,22 @@ const PurchaseModal = (props) => {
           </Button>
         </div>
       </div>
-      <div style={{ height: "55px" }}></div>
-
-      {console.log(state.error)}
-      {state.error !== null ? (
-        <div style={{ color: "red" }}>{state.error}</div>
-      ) : null}
+      <div style={{ height: "55px" }}>
+        {state.error !== null ? (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "red",
+            }}
+          >
+            {state.error}
+          </div>
+        ) : (
+          <div></div>
+        )}
+      </div>
     </Dialog>
   );
 };

@@ -21,7 +21,6 @@ function App() {
         }
       })
       .then((data) => {
-        console.log("data", data);
         receiveSeatInfoFromServer(data);
       })
       .catch((error) => {

@@ -32,6 +32,7 @@ router.get("/api/seat-availability", async (req, res) => {
 let lastBookingAttemptSucceeded = false;
 
 router.post("/api/book-seat", async (req, res) => {
+  console.log("***", req.body);
   const { seatId, creditCard, expiration } = req.body;
 
   await delay(Math.random() * 3000);

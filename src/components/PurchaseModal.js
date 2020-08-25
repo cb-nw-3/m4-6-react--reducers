@@ -95,7 +95,6 @@ const PurchaseModal = () => {
                   }
                 })
                 .catch((err) => {
-                  console.log('catch',err);
                   purchaseTicketFailure("Alarm.Alarm.Alarm");
                 });
             }}

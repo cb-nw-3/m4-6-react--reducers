@@ -72,7 +72,7 @@ export const BookingProvider = ({ children }) => {
     [dispatch]
   );
   const purchaseTicketFailure = React.useCallback(
-    ({ message }) =>
+    (message) =>
       dispatch({
         type: "purchase-ticket-failure",
         message: message,

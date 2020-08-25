@@ -1,38 +1,29 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
+import { SeatContext } from './SeatContext';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
-import { getRowName, getSeatNum } from '../helpers';
-import { range } from '../utils';
+import Seat from './Seat';
 
 const TicketWidget = () => {
-  // TODO: use values from Context
-  const numOfRows = 6;
-  const seatsPerRow = 6;
+  const {
+    state: {
+      hasLoaded,
+    }
+  } = React.useContext(SeatContext);
 
-  // TODO: implement the loading spinner <CircularProgress />
-  // with the hasLoaded flag
-
+  if (!hasLoaded) {
+    return (
+      <Circular>
+        <CircularProgress />
+      </Circular>
+    )
+  }
   return (
     <Wrapper>
-      {range(numOfRows).map(rowIndex => {
-        const rowName = getRowName(rowIndex);
-
-        return (
-          <Row key={rowIndex}>
-            <RowLabel>Row {rowName}</RowLabel>
-            {range(seatsPerRow).map(seatIndex => {
-              const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
-
-              return (
-                <SeatWrapper key={seatId}>
-                  {/* TODO: Render the actual <Seat /> */}
-                </SeatWrapper>
-              );
-            })}
-          </Row>
-        );
-      })}
+      <Seat
+        width={36}
+        height={36}
+      />
     </Wrapper>
   );
 };
@@ -44,21 +35,11 @@ const Wrapper = styled.div`
   padding: 8px;
 `;
 
-const Row = styled.div`
+const Circular = styled.div`
+  height: 100vh;
   display: flex;
-  position: relative;
-
-  &:not(:last-of-type) {
-    border-bottom: 1px solid #ddd;
-  }
-`;
-
-const RowLabel = styled.div`
-  font-weight: bold;
-`;
-
-const SeatWrapper = styled.div`
-  padding: 5px;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default TicketWidget;

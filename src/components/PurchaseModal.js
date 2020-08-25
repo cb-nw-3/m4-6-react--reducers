@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { BookingContext } from "./BookingContext";
+import { SeatContext } from "./SeatContext";
 
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
@@ -24,6 +25,10 @@ const PurchaseModal = () => {
       cancelBookingProcess,
     },
   } = React.useContext(BookingContext);
+  const {
+    actions: { markSeatAsBooked },
+  } = React.useContext(SeatContext);
+
 
   const [creditCard, setCreditCard] = React.useState("");
   const [expiration, setExpiration] = React.useState("");
@@ -69,7 +74,7 @@ const PurchaseModal = () => {
           </TicketTable>
           <ModalInput
             onSubmit={(ev) => {
-              ev.preventDefault()
+              ev.preventDefault();
 
               purchaseTicketRequest();
 
@@ -88,10 +93,12 @@ const PurchaseModal = () => {
                 .then((data) => {
                   let errorMessage = data.message;
                   if (data.success) {
+                    console.log(selectedSeatId)
+                    markSeatAsBooked(selectedSeatId);
                     purchaseTicketSuccess();
                   } else {
                     purchaseTicketFailure(data.message);
-                    console.log(data.message)
+                    console.log(data.message);
                   }
                 })
                 .catch((err) => {
@@ -120,8 +127,8 @@ const PurchaseModal = () => {
                 onChange={(ev) => setExpiration(ev.target.value)}
               />
               <DialogActions>
-                {error ? <p style={{color: 'red'}}>{error}</p> : null}
-                <Button color="primary" type='submit'>
+                {error ? <p style={{ color: "red" }}>{error}</p> : null}
+                <Button color="primary" type="submit">
                   {status === "awaiting-response" ? (
                     <CircularProgress />
                   ) : (

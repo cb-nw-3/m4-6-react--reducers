@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 export const SeatContext = React.createContext();
 
@@ -10,15 +10,33 @@ const initialState = {
 };
 
 function reducer(state, action) {
-  switch(action.type) {
-    case 'receive-seat-info-from-server':
+  switch (action.type) {
+    case "receive-seat-info-from-server":
       return {
         ...state,
         hasLoaded: true,
         seats: action.seats,
         numOfRows: action.numOfRows,
         seatsPerRow: action.seatsPerRow,
-      }
+      };
+    case "seat-marked-as-booked":
+      console.log(action, state);
+      return {
+        // grab all the old state
+        ...state,
+        // in seats array
+        seats: {
+          // grab all the seats
+          ...state.seats,
+          // change specific seat
+          [action.seatId]: { 
+            // grab all data from said seat
+            ...state.seats[action.seatId],
+            // change booked property
+            isBooked: true 
+          },
+        },
+      };
     default:
       throw new Error(`Action non reconnue ${action.type}`);
   }
@@ -33,6 +51,12 @@ export const SeatProvider = ({ children }) => {
       ...data,
     });
   };
+  const markSeatAsBooked = (seatId) => {
+    dispatch({
+      type: "seat-marked-as-booked",
+      seatId,
+    });
+  };
 
   return (
     <SeatContext.Provider
@@ -40,6 +64,7 @@ export const SeatProvider = ({ children }) => {
         state,
         actions: {
           receiveSeatInfoFromServer,
+          markSeatAsBooked,
         },
       }}
     >

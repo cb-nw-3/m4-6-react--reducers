@@ -7,13 +7,15 @@ import Seat from './Seat'
 import { getRowName, getSeatNum } from '../helpers';
 import { range } from '../utils';
 import { SeatContext } from './SeatContext'
+import { Dialog } from '@material-ui/core';
 
 const TicketWidget = () => {
+  const [open, setOpen] = React.useState(false)
   const {
     state: { hasLoaded, seats, numOfRows, seatsPerRow},
   } = React.useContext(SeatContext)
   // TODO: use values from Context
-console.log(seats) // isBooked true / false
+  // console.log(seats) // isBooked true / false
   // TODO: implement the loading spinner <CircularProgress />
   // with the hasLoaded flag
   if (!hasLoaded) {
@@ -24,24 +26,34 @@ console.log(seats) // isBooked true / false
     <Wrapper>
       {range(numOfRows).map(rowIndex => {
         const rowName = getRowName(rowIndex);
+        
 
         return (
           <Row key={rowIndex}>
             <RowLabel>Row {rowName}</RowLabel>
             {range(seatsPerRow).map(seatIndex => {
               const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
+              
 
               // if seats isBooked = true { {style={{filter: 'grayscale(100%)'}}} }
-              console.log(seats[seatId].price)
+              // console.log(seats[seatId].price)
               return (
                 <SeatWrapper key={seatId}>
                   {<Seat seatSrc={seat} ID={seatId} isBooked={seats[seatId].isBooked} price={seats[seatId].price} />}
                 </SeatWrapper>
               );
             })}
+            
           </Row>
-        );
+          
+        ); 
+
       })}
+      <Dialog open={false}>
+        
+        Price: {}
+      </Dialog>
+      
     </Wrapper>
   );
 };

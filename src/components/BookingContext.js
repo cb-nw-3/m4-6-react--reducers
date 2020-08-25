@@ -22,18 +22,14 @@ function reducer(state, action) {
     case "purchase-ticket-request":
       return {
         ...state,
-        status: "started",
+        status: "awaiting-response",
         error: null,
-        selectedSeatId: action.selectedSeatId,
-        price: action.price,
       };
     case "purchase-ticket-failure":
       return {
         ...state,
-        status: "started",
+        status: "error",
         error: "Please provide credit card information",
-        selectedSeatId: action.selectedSeatId,
-        price: action.price,
       };
     case "purchase-ticket-success":
       return {
@@ -69,38 +65,31 @@ export const BookingProvider = ({ children }) => {
     [dispatch]
   );
   const purchaseTicketRequest = React.useCallback(
-    ({ seatId, seatPrice }) =>
+    () =>
       dispatch({
         type: "purchase-ticket-request",
-        seatId,
-        seatPrice,
       }),
     [dispatch]
   );
   const purchaseTicketFailure = React.useCallback(
-    ({ seatId, seatPrice }) =>
+    ({ errorMessage }) =>
       dispatch({
         type: "purchase-ticket-failure",
-        seatId,
-        seatPrice,
+        errorMessage,
       }),
     [dispatch]
   );
   const purchaseTicketSuccess = React.useCallback(
-    ({ seatId, seatPrice }) =>
+    () =>
       dispatch({
         type: "purchase-ticket-success",
-        seatId,
-        seatPrice,
       }),
     [dispatch]
   );
   const cancelBookingProcess = React.useCallback(
-    ({ seatId, seatPrice }) =>
+    () =>
       dispatch({
         type: "purchase-ticket-success",
-        seatId,
-        seatPrice,
       }),
     [dispatch]
   );

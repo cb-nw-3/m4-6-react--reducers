@@ -11,6 +11,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 import { decodeSeatId } from "../helpers";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const PurchaseModal = () => {
   const {
@@ -33,8 +34,12 @@ const PurchaseModal = () => {
 
   const handleClose = () => {
     const creditCardInputType = typeof parseInt(creditCard) === "number";
-    if (creditCardInputType && creditCard.length === 16 && expiration.length !== 6) {
-      purchaseTicketFailure({ })
+    if (
+      creditCardInputType &&
+      creditCard.length === 16 &&
+      expiration.length !== 6
+    ) {
+      purchaseTicketFailure({});
     }
   };
 
@@ -62,7 +67,38 @@ const PurchaseModal = () => {
               <p>{price}</p>
             </div>
           </TicketTable>
-          <ModalInput>
+          <ModalInput
+            onSubmit={(ev) => {
+              ev.preventDefault()
+
+              purchaseTicketRequest();
+
+              fetch("/api/book-seat", {
+                method: "POST",
+                body: JSON.stringify({
+                  creditCard,
+                  expiration,
+                  seatId: selectedSeatId,
+                }),
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              })
+                .then((res) => res.json())
+                .then((data) => {
+                  if (data.success) {
+                    purchaseTicketSuccess();
+                  } else {
+                    purchaseTicketFailure(data.errorMessage);
+                    console.log(data.errorMessage)
+                  }
+                })
+                .catch((err) => {
+                  console.log(err);
+                  purchaseTicketFailure("Alarm.Alarm.Alarm");
+                });
+            }}
+          >
             <h3>Enter payment details</h3>
             <CreditCardContainer>
               <TextField
@@ -84,8 +120,13 @@ const PurchaseModal = () => {
                 onChange={(ev) => setExpiration(ev.target.value)}
               />
               <DialogActions>
-                <Button onClick={handleClose} color="primary">
-                  Subscribe
+                {error ? <p style={{color: 'red'}}>{error}</p> : null}
+                <Button color="primary" type='submit'>
+                  {status === "awaiting-response" ? (
+                    <CircularProgress />
+                  ) : (
+                    "Purchase"
+                  )}
                 </Button>
               </DialogActions>
             </CreditCardContainer>
@@ -97,7 +138,7 @@ const PurchaseModal = () => {
 };
 
 const TicketTable = styled.div``;
-const ModalInput = styled.div``;
+const ModalInput = styled.form``;
 const CreditCardContainer = styled.div``;
 
 export default PurchaseModal;

@@ -15,8 +15,6 @@ const Seat = (props) => {
   const seatId = encodeSeatId(props.rowIndex, props.seatIndex);
   const seatPrice = props.price;
 
-  console.log('seat', seatId, seatPrice)
-
   return (
     <StyledButton
       disabled={props.status === "available" ? false : true}

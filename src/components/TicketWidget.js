@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { SeatContext } from "./SeatContext";
-import seatSrc from "../assets/seat-available.svg";
+import Seat from "./Seat";
 
 import { getRowName, getSeatNum } from "../helpers";
 import { range } from "../utils";
@@ -10,7 +10,6 @@ import { range } from "../utils";
 const TicketWidget = () => {
   // TODO: use values from Context
   const { state } = React.useContext(SeatContext);
-  console.log(state);
   const numOfRows = state.numOfRows;
   const seatsPerRow = state.seatsPerRow;
 
@@ -34,13 +33,18 @@ const TicketWidget = () => {
 
                   return (
                     <SeatWrapper key={seatId}>
-                      <ButtonWrapper disabled={state.seats[seatId].isBooked}>
-                        {<img alt="seat" src={seatSrc} />}
-                        <ToolTip>
-                          {rowName}, Seat {getSeatNum(seatIndex)} -{" "}
-                          {state.seats[seatId].price}$
-                        </ToolTip>
-                      </ButtonWrapper>
+                      <Seat
+                        // rowIndex={rowIndex}
+                        // seatIndex={seatIndex}
+                        // width={36}
+                        // height={36}
+                        // price={seat.price}
+                        // status={seat.isBooked ? "unavailable" : "available"}
+                        seatId={seatId}
+                        seats={state.seats}
+                        rowName={rowName}
+                        seatIndex={seatIndex}
+                      />
                     </SeatWrapper>
                   );
                 })}
@@ -74,39 +78,6 @@ const RowLabel = styled.div`
 
 const SeatWrapper = styled.div`
   padding: 5px;
-`;
-
-const ButtonWrapper = styled.button`
-  margin: 0;
-  padding: 0;
-  border: none;
-  nackground-color: transparent;
-  cursor: pointer;
-  position: relative;
-
-  &:focus {
-    outline: none;
-  }
-
-  &:disabled img {
-    filter: grayscale(100%);
-  }
-
-  &:hover span {
-    display: inline;
-  }
-`;
-
-const ToolTip = styled.span`
-  position: absolute;
-  background: #222;
-  z-index: 99;
-  top: -20px;
-  left: 0;
-  padding: 2px;
-  color: #fff;
-  display: none;
-  min-width: 120px;
 `;
 
 export default TicketWidget;

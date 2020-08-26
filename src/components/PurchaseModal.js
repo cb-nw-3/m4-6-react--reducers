@@ -18,7 +18,6 @@ const PurchaseModal = () => {
   const {
     state: { status, error, selectedSeatId, price },
     actions: {
-      beginBookingProcess,
       purchaseTicketRequest,
       purchaseTicketFailure,
       purchaseTicketSuccess,
@@ -29,24 +28,10 @@ const PurchaseModal = () => {
     actions: { markSeatAsBooked },
   } = React.useContext(SeatContext);
 
-
   const [creditCard, setCreditCard] = React.useState("");
   const [expiration, setExpiration] = React.useState("");
 
   const { rowName, seatNum } = decodeSeatId(selectedSeatId);
-
-  const handleClickOpen = () => {};
-
-  const handleClose = () => {
-    const creditCardInputType = typeof parseInt(creditCard) === "number";
-    if (
-      creditCardInputType &&
-      creditCard.length === 16 &&
-      expiration.length !== 6
-    ) {
-      purchaseTicketFailure({});
-    }
-  };
 
   return (
     <>
@@ -56,21 +41,17 @@ const PurchaseModal = () => {
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">Purchase ticket</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            You're purchasing 1 ticket for the price of {price}
+        <DialogContent style={{padding: 0}}>
+          <DialogContentText style={{margin: '20px'}}>
+            You're purchasing <strong>1</strong> ticket for the price of {price}$
           </DialogContentText>
           <TicketTable>
-            <div>
-              <p>Row</p>
-              <p>Seat</p>
-              <p>Price</p>
-            </div>
-            <div>
-              <p>{rowName}</p>
-              <p>{seatNum}</p>
-              <p>{price}</p>
-            </div>
+              <TableItem>Row</TableItem>
+              <TableItem>Seat</TableItem>
+              <TableItem>Price</TableItem>
+              <TableItem>{rowName}</TableItem>
+              <TableItem>{seatNum}</TableItem>
+              <TableItem>{price}</TableItem>
           </TicketTable>
           <ModalInput
             onSubmit={(ev) => {
@@ -91,14 +72,11 @@ const PurchaseModal = () => {
               })
                 .then((res) => res.json())
                 .then((data) => {
-                  let errorMessage = data.message;
                   if (data.success) {
-                    console.log(selectedSeatId)
                     markSeatAsBooked(selectedSeatId);
                     purchaseTicketSuccess();
                   } else {
                     purchaseTicketFailure(data.message);
-                    console.log(data.message);
                   }
                 })
                 .catch((err) => {
@@ -144,8 +122,22 @@ const PurchaseModal = () => {
   );
 };
 
-const TicketTable = styled.div``;
-const ModalInput = styled.form``;
+const TicketTable = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  width: 80%;
+  margin: 0 auto;
+`;
+const TableItem = styled.div`
+  border-bottom: 1px solid lightgray;
+  padding: 10px;
+`
+const ModalInput = styled.form`
+  background-color: #eee;
+  padding: 20px;
+  margin: 30px 0;
+`;
 const CreditCardContainer = styled.div``;
 
 export default PurchaseModal;

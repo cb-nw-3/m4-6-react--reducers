@@ -6,21 +6,14 @@ import { SeatContext } from "./SeatContext";
 import TicketWidget from "../components/TicketWidget";
 import PurchaseModal from "./PurchaseModal";
 import { BookingContext } from "./BookingContext";
-
+import YesPurchase from './YesPurchase';
 
 function App() {
   const {
     actions: { receiveSeatInfoFromServer },
   } = React.useContext(SeatContext);
   const {
-    state: { status, error, selectedSeatId, price },
-    actions: {
-      beginBookingProcess,
-      purchaseTicketRequest,
-      purchaseTicketFailure,
-      purchaseTicketSuccess,
-      cancelBookingProcess,
-    },
+    state: { status },
   } = React.useContext(BookingContext);
 
   React.useEffect(() => {
@@ -32,9 +25,11 @@ function App() {
   return (
     <Wrapper>
       <GlobalStyles />
-      <TicketWidget></TicketWidget>
-      <PurchaseModal />
-      {status === "purchased" ? <p>Success</p> : null}
+      <MainContainer>
+        <TicketWidget></TicketWidget>
+        <PurchaseModal />
+        {status === "purchased" ? <YesPurchase/> : null}
+      </MainContainer>
     </Wrapper>
   );
 }
@@ -45,5 +40,10 @@ const Wrapper = styled.div`
   align-items: center;
   height: 100vh;
 `;
+const MainContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
 
 export default App;

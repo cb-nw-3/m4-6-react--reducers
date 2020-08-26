@@ -20,7 +20,6 @@ function reducer(state, action) {
         seatsPerRow: action.seatsPerRow,
       };
     case "seat-marked-as-booked":
-      console.log(action, state);
       return {
         // grab all the old state
         ...state,
@@ -29,11 +28,11 @@ function reducer(state, action) {
           // grab all the seats
           ...state.seats,
           // change specific seat
-          [action.seatId]: { 
+          [action.seatId]: {
             // grab all data from said seat
             ...state.seats[action.seatId],
             // change booked property
-            isBooked: true 
+            isBooked: true,
           },
         },
       };

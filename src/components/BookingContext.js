@@ -89,7 +89,7 @@ export const BookingProvider = ({ children }) => {
   const cancelBookingProcess = React.useCallback(
     () =>
       dispatch({
-        type: "purchase-ticket-success",
+        type: "cancel-booking-process",
       }),
     [dispatch]
   );

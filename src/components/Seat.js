@@ -8,7 +8,6 @@ import { BookingContext } from "./BookingContext";
 
 const Seat = (props) => {
   const {
-    state: { status, error, selectedSeatId, price },
     actions: { beginBookingProcess },
   } = React.useContext(BookingContext);
 

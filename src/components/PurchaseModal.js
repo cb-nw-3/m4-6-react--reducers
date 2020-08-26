@@ -41,17 +41,18 @@ const PurchaseModal = () => {
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">Purchase ticket</DialogTitle>
-        <DialogContent style={{padding: 0}}>
-          <DialogContentText style={{margin: '20px'}}>
-            You're purchasing <strong>1</strong> ticket for the price of {price}$
+        <DialogContent style={{ padding: 0 }}>
+          <DialogContentText style={{ margin: "20px" }}>
+            You're purchasing <strong>1</strong> ticket for the price of {price}
+            $
           </DialogContentText>
           <TicketTable>
-              <TableItem>Row</TableItem>
-              <TableItem>Seat</TableItem>
-              <TableItem>Price</TableItem>
-              <TableItem>{rowName}</TableItem>
-              <TableItem>{seatNum}</TableItem>
-              <TableItem>{price}</TableItem>
+            <TableItem>Row</TableItem>
+            <TableItem>Seat</TableItem>
+            <TableItem>Price</TableItem>
+            <TableItem>{rowName}</TableItem>
+            <TableItem>{seatNum}</TableItem>
+            <TableItem>{price}</TableItem>
           </TicketTable>
           <ModalInput
             onSubmit={(ev) => {
@@ -132,7 +133,7 @@ const TicketTable = styled.div`
 const TableItem = styled.div`
   border-bottom: 1px solid lightgray;
   padding: 10px;
-`
+`;
 const ModalInput = styled.form`
   background-color: #eee;
   padding: 20px;

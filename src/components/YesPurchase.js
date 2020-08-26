@@ -1,31 +1,32 @@
-import React from 'react';
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
-import { BsCheckCircle } from 'react-icons/bs';
-import { GrClose } from 'react-icons/gr';
+import { BsCheckCircle } from "react-icons/bs";
+import { GrClose } from "react-icons/gr";
 import { BookingContext } from "./BookingContext";
 
 const YesPurchase = () => {
   const {
-    state: { status },
-    actions: { cancelBookingProcess }
+    actions: { cancelBookingProcess },
   } = React.useContext(BookingContext);
 
   return (
     <StyledContainer>
-      <BsCheckCircle style={{color: 'white'}} />
+      <BsCheckCircle style={{ color: "white" }} />
       <StyledP>Successfully purchased ticket! Enjoy el concerto.</StyledP>
-      <StyledButton onClick={() => cancelBookingProcess()}><GrClose/></StyledButton>
+      <StyledButton onClick={() => cancelBookingProcess()}>
+        <GrClose />
+      </StyledButton>
     </StyledContainer>
-  )
-}
+  );
+};
 
 const StyledButton = styled.button`
   background: green;
-`
+`;
 const StyledP = styled.p`
   margin-left: 5px;
-`
+`;
 const StyledContainer = styled.div`
   background: green;
   border-radius: 5px;
@@ -33,5 +34,5 @@ const StyledContainer = styled.div`
   display: flex;
   padding: 10px;
   margin-top: 50px;
-`
+`;
 export default YesPurchase;

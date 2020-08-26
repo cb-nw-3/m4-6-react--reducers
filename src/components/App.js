@@ -6,7 +6,7 @@ import { SeatContext } from "./SeatContext";
 import TicketWidget from "../components/TicketWidget";
 import PurchaseModal from "./PurchaseModal";
 import { BookingContext } from "./BookingContext";
-import YesPurchase from './YesPurchase';
+import YesPurchase from "./YesPurchase";
 
 function App() {
   const {
@@ -28,7 +28,7 @@ function App() {
       <MainContainer>
         <TicketWidget></TicketWidget>
         <PurchaseModal />
-        {status === "purchased" ? <YesPurchase/> : null}
+        {status === "purchased" ? <YesPurchase /> : null}
       </MainContainer>
     </Wrapper>
   );
@@ -44,6 +44,6 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`
+`;
 
 export default App;

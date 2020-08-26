@@ -17,7 +17,6 @@ const TicketWidget = () => {
     actions: { beginBookingProcess },
   } = React.useContext(BookingContext);
 
-
   return (
     <Wrapper>
       {!hasLoaded ? (
@@ -39,7 +38,9 @@ const TicketWidget = () => {
                     width={36}
                     height={36}
                     price={seats[seatId].price}
-                    status={seats[seatId].isBooked ? "unavailable" : "available"}
+                    status={
+                      seats[seatId].isBooked ? "unavailable" : "available"
+                    }
                   ></Seat>
                 );
               })}

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components'
 
 import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
 import seatImage from '../assets/seat-available.svg';
 
 const Seat = (props) => {
@@ -9,6 +10,7 @@ const Seat = (props) => {
 
         <SeatInfo
         content={`Row: ${String.fromCharCode(props.rowIndex + 65)}, Seat: ${props.seatIndex + 1}, Price: ${props.price}$`}
+        arrow
         >
             <SeatWrapper 
             key={props.seatId}
@@ -24,6 +26,7 @@ const Seat = (props) => {
         </SeatInfo>
     )
 }
+
 
 const SeatInfo = styled(Tippy)`
 `

@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import React from "react";
 import seatSrc from "../assets/seat-available.svg";
-import { range } from "../utils";
-import { getRowName, getSeatNum } from "../helpers";
+import { getSeatNum } from "../helpers";
+import { BookingContext } from "./BookingContext";
 
 const ButtonWrapper = styled.button`
   margin: 0;
@@ -20,7 +20,7 @@ const ButtonWrapper = styled.button`
     filter: grayscale(100%);
   }
 
-  &:hover span {
+  &:enabled:hover span {
     display: inline;
   }
 `;
@@ -38,10 +38,18 @@ const ToolTip = styled.span`
 `;
 
 const Seat = ({ seatId, seats, rowName, seatIndex }) => {
+  const {
+    state,
+    actions: { bookSeat },
+  } = React.useContext(BookingContext);
+
   const seat = seats[seatId];
   return (
     <>
-      <ButtonWrapper disabled={seat.isBooked}>
+      <ButtonWrapper
+        disabled={seat.isBooked}
+        onClick={bookSeat.bind(null, { seatId: seatId, price: seat.price })}
+      >
         {<img alt="seat" src={seatSrc} />}
         <ToolTip>
           {rowName}, Seat {getSeatNum(seatIndex)} - {seat.price}$

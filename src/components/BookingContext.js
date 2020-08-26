@@ -20,6 +20,15 @@ const reducer = (state, action) => {
             };
         };
 
+        case 'cancel-booking-process': {
+            return {
+                ...state,
+                status: 'idle',
+                selectedSeatId: null,
+                price: null,
+            };
+        };
+
         default:
             throw new Error(`Unrecognized action: ${action.type}`);
     };
@@ -33,12 +42,17 @@ export const BookingProvider = ({children}) => {
             dispatch({type: 'begin-booking-process', seatId, price}), [dispatch]
     );
 
+    const cancelBookingProcess = React.useCallback(() => 
+        dispatch({type: 'cancel-booking-process',}), [dispatch]
+    )
+
     return (
         <BookingContext.Provider
         value={{
             ...state,
             actions: {
                 beginBookingProcess,
+                cancelBookingProcess,
             },
         }}
             >

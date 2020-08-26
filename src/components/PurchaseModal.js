@@ -12,6 +12,9 @@ const PurchaseModal = () => {
         error,
         selectedSeatId,
         price,
+        actions: {
+            cancelBookingProcess,
+        }
     } = React.useContext(BookingContext);
     
     const {
@@ -21,6 +24,7 @@ const PurchaseModal = () => {
     return (
         <Dialog
             open={selectedSeatId !== null}
+            onClose={cancelBookingProcess}
         >
         test
         </Dialog>

@@ -18,8 +18,8 @@ function App() {
   return (
     <>
       <GlobalStyles />
-      <TicketWidget />
       This venue has {numOfRows} rows!
+      <TicketWidget />
     </>
   );
 }

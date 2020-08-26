@@ -16,30 +16,33 @@ const TicketWidget = () => {
 
   // TODO: implement the loading spinner <CircularProgress />
   // with the hasLoaded flag
+  if (!hasLoaded) {
+    return <CircularProgress />;
+  } else {
+    return (
+      <Wrapper>
+        {range(numOfRows).map((rowIndex) => {
+          const rowName = getRowName(rowIndex);
 
-  return (
-    <Wrapper>
-      {range(numOfRows).map((rowIndex) => {
-        const rowName = getRowName(rowIndex);
+          return (
+            <Row key={rowIndex}>
+              <RowLabel>Row {rowName}</RowLabel>
+              {range(seatsPerRow).map((seatIndex) => {
+                const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
 
-        return (
-          <Row key={rowIndex}>
-            <RowLabel>Row {rowName}</RowLabel>
-            {range(seatsPerRow).map((seatIndex) => {
-              const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
-
-              return (
-                <SeatWrapper key={seatId}>
-                  {/* TODO: Render the actual <Seat /> */}
-                  <SeatAvailable src={seatAvailable} />
-                </SeatWrapper>
-              );
-            })}
-          </Row>
-        );
-      })}
-    </Wrapper>
-  );
+                return (
+                  <SeatWrapper key={seatId}>
+                    {/* TODO: Render the actual <Seat /> */}
+                    <SeatAvailable src={seatAvailable} />
+                  </SeatWrapper>
+                );
+              })}
+            </Row>
+          );
+        })}
+      </Wrapper>
+    );
+  }
 };
 
 const Wrapper = styled.div`

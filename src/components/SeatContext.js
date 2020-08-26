@@ -13,6 +13,9 @@ function reducer(state, action) {
   switch (action.type) {
     case "recieve-seat-info-from-server": {
       console.log("reducer triggered");
+      console.log(action);
+      console.log(state);
+
       return state;
     }
     default: {
@@ -29,6 +32,9 @@ export const SeatProvider = ({ children }) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
   const recieveSeatInfoFromServer = (data) => {
+    console.log("recieveSeatInfoFromServer");
+    console.log(data);
+
     dispatch({
       type: "recieve-seat-info-from-server",
       ...data,

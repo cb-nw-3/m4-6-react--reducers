@@ -48,7 +48,11 @@ const Seat = ({ seatId, seats, rowName, seatIndex }) => {
     <>
       <ButtonWrapper
         disabled={seat.isBooked}
-        onClick={bookSeat.bind(null, { seatId: seatId, price: seat.price })}
+        onClick={bookSeat.bind(null, {
+          seatId: seatId,
+          price: seat.price,
+          status: seat.isBooked ? "unavailable" : "available",
+        })}
       >
         {<img alt="seat" src={seatSrc} />}
         <ToolTip>

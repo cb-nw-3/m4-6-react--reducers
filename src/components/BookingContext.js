@@ -13,7 +13,12 @@ function reducer(state, action) {
   switch (action.type) {
     case "begin-booking-process": {
       // TODO
-      console.log(action);
+      const newState = { ...state };
+      newState.status = action.status;
+      newState.selectedSeatId = action.seatId;
+      newState.price = action.price;
+      console.log(newState);
+      return newState;
     }
     default: {
       return state;

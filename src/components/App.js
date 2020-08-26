@@ -21,7 +21,6 @@ function App() {
   return (
     <>
       <GlobalStyles />
-      This venue has {numOfRows} rows!
       <TicketWidget />
     </>
   );

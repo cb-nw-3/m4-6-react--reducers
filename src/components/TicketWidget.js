@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
 
 import { SeatContext } from './SeatContext'
 import { getRowName, getSeatNum } from '../helpers';
@@ -11,7 +13,7 @@ const TicketWidget = () => {
 
   const { state, dispatch } = React.useContext(SeatContext);
 
-  console.log(state);
+  // console.log("State of state:", state);
 
   const numOfRows = state.numOfRows;
   const seatsPerRow = state.seatsPerRow;
@@ -19,36 +21,61 @@ const TicketWidget = () => {
   // TODO: implement the loading spinner <CircularProgress />
   // with the hasLoaded flag
 
-  const Seat = () => {
-    return <img alt="seat for booking" src={seatSrc} />
+  const Seat = (props) => {
+    console.log(props);
+    const rowAlph = ["A", "B", "C", "D", "E", "F", "G", "H"];
+    let tippyContent = `Row ${rowAlph[props.rowIndex]}, Seat ${props.seatIndex + 1} - $${props.price}`;
+    if (props.status === 'available') {
+      return (
+        <Tippy content={tippyContent}>
+          <SeatButton><img alt="seat for booking" src={seatSrc} /></SeatButton>
+        </Tippy>
+      )
+    } else {
+      return <img alt="sold seat for booking" style={{
+        filter: 'grayscale(100%)'
+      }} src={seatSrc} />
+    }
   }
 
-  return (
-    <Wrapper>
-      {range(numOfRows).map(rowIndex => {
-        const rowName = getRowName(rowIndex);
+  if (state.hasLoaded === false) {
+    return (
+      <LoadingWrapper>
+        < CircularProgress />
+      </LoadingWrapper>
+    )
+  } else {
+    return (
+      <Wrapper>
+        {range(numOfRows).map(rowIndex => {
+          const rowName = getRowName(rowIndex);
 
-        return (
-          <Row key={rowIndex}>
-            {/* <RowLabel>Row {rowName}</RowLabel> */}
-            {range(seatsPerRow).map(seatIndex => {
-              const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
+          return (
+            <Row key={rowIndex}>
+              <RowLabel>Row {rowName}</RowLabel>
+              {range(seatsPerRow).map(seatIndex => {
+                const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
+                const seat = state["seats"][seatId];
 
-              return (
-                <SeatWrapper key={seatId}>
-                  <Seat />
-                </SeatWrapper>
-              );
-            })}
-          </Row>
-        );
-      })}
-    </Wrapper>
-  );
+                return (
+                  <SeatWrapper key={seatId}>
+                    <Seat
+                      rowIndex={rowIndex}
+                      seatIndex={seatIndex}
+                      price={seat.price}
+                      status={seat.isBooked ? "unavailable" : "available"}
+                    />
+                  </SeatWrapper>
+                )
+              })}
+            </Row>
+          );
+        })
+        }
+      </Wrapper >
+    );
+  }
 };
-
-// GlobalStyles forces body to be 100wh
-// I don't really want that. But... eh.
 
 const Wrapper = styled.div`
   background: #eee;
@@ -58,8 +85,15 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 200px;
+  margin: auto;
+  margin-top: 100px;
+  width: min-content;
 `;
+
+const LoadingWrapper = styled(Wrapper)`
+  background: #222;
+  border: none;
+`
 
 const Row = styled.div`
   display: flex;
@@ -72,10 +106,18 @@ const Row = styled.div`
 
 const RowLabel = styled.div`
   font-weight: bold;
+  position: absolute;
+  margin-top: 14px;
+  margin-left: -80px;
 `;
 
 const SeatWrapper = styled.div`
   padding: 5px;
+`;
+
+const SeatButton = styled.button`
+  border: none;
+  padding: 0;
 `;
 
 export default TicketWidget;

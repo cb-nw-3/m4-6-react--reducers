@@ -4,10 +4,18 @@ import styled from 'styled-components'
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
 import seatImage from '../assets/seat-available.svg';
+import { BookingContext } from './BookingContext';
 
 const Seat = (props) => {
-    return(
+  //Subscribing to BookingContext
+  const {
+    actions: { beginBookingProcess },
+  } = React.useContext(BookingContext);
 
+  const seatId = props.seatId;
+  const price = props.price;
+
+  return(
         <SeatInfo
         content={`Row: ${String.fromCharCode(props.rowIndex + 65)}, Seat: ${props.seatIndex + 1}, Price: ${props.price}$`}
         arrow
@@ -15,6 +23,9 @@ const Seat = (props) => {
             <SeatWrapper 
             key={props.seatId}
             disabled={props.status}
+            onClick={() => {
+              beginBookingProcess({ seatId, price});
+            }}
             >
             <SeatImage 
                 src={seatImage}

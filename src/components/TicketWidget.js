@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Tippy from '@tippyjs/react';
 
 import { getRowName, getSeatNum } from '../helpers';
 import { range } from '../utils';
@@ -64,8 +63,6 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center
 `;
-
-
 
 const SeatMap = styled.div`
   background: #eee;

@@ -5,13 +5,16 @@ import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/themes/material.css";
 import "tippy.js/animations/scale-subtle.css";
+import { BookingContext } from "./BookingContext";
 
 const Seat = (props) => {
+  const { beginBookingProcess } = React.useContext(BookingContext);
+
   return (
     <Tippy
       content={`Seat: ${props.rowName}-${props.seatNum}, Cost: $${props.price}`}
     >
-      <Wrapper disabled={props.isBooked}>
+      <Wrapper onClick={beginBookingProcess} disabled={props.isBooked}>
         <img src={seatSrc} />
       </Wrapper>
     </Tippy>

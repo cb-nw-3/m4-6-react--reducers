@@ -33,9 +33,12 @@ const TicketWidget = () => {
 
                 return (
                   <SeatWrapper key={seatId}>
-                    {/* TODO: Render the actual <Seat /> */}
                     <Seat
                       isBooked={seat.isBooked}
+                      rowIndex={rowIndex}
+                      seatIndex={seatIndex}
+                      width={36}
+                      height={36}
                       price={seat.price}
                       seatNum={getSeatNum(seatIndex)}
                       rowName={rowName}
@@ -76,5 +79,4 @@ const SeatWrapper = styled.div`
   background: white;
 `;
 
-const SeatAvailable = styled.img``;
 export default TicketWidget;

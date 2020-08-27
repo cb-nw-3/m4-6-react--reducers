@@ -10,7 +10,19 @@ const initialState = {
 };
 
 function reducer(state, action) {
-  // TODO
+  switch (action.type) {
+    case "receive-seat-info-from-server": {
+      return {
+        ...state,
+        hasLoaded: true,
+        seats: action.seats,
+        numOfRows: action.numOfRows,
+        seatsPerRow: action.seatsPerRow,
+      };
+    }
+    default:
+      throw new Error("Unrecognized Action");
+  }
 }
 
 export const SeatProvider = ({ children }) => {

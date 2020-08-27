@@ -6,14 +6,18 @@ import Seat from './Seat'
 
 import { getRowName, getSeatNum } from '../helpers';
 import { range } from '../utils';
-import { SeatContext } from './SeatContext'
+import { SeatContext } from './SeatContext';
 import { Dialog } from '@material-ui/core';
+import { BookingContext } from './BookingContext';
 
 const TicketWidget = () => {
-  const [open, setOpen] = React.useState(false)
-  const {
-    state: { hasLoaded, seats, numOfRows, seatsPerRow},
+  // const [selectedSeatId, setSelectedSeatId] = React.useState(null)
+  const { 
+    state: { hasLoaded, seats, numOfRows, seatsPerRow },
   } = React.useContext(SeatContext)
+  const {
+    state: { selectedSeatId }
+  } = React.useContext(BookingContext)
   // TODO: use values from Context
   // console.log(seats) // isBooked true / false
   // TODO: implement the loading spinner <CircularProgress />
@@ -21,7 +25,6 @@ const TicketWidget = () => {
   if (!hasLoaded) {
     return <CircularProgress />
   }
-
   return (
     <Wrapper>
       {range(numOfRows).map(rowIndex => {
@@ -49,9 +52,12 @@ const TicketWidget = () => {
         ); 
 
       })}
-      <Dialog open={false}>
-        
-        Price: {}
+        Price: {selectedSeatId}
+
+      <Dialog open={!!selectedSeatId}>
+          {}
+        Price: {selectedSeatId}
+        {/* Form here w/ rule set CC # and EXP w a submit btn */}
       </Dialog>
       
     </Wrapper>

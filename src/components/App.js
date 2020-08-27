@@ -2,6 +2,7 @@ import React from 'react';
 
 import GlobalStyles from './GlobalStyles';
 import { SeatContext } from './SeatContext';
+import { BookingContext } from './BookingContext';
 import TicketWidget from './TicketWidget';
 
 function App() {
@@ -9,6 +10,11 @@ function App() {
     state: { numOfRows },
     actions: { receiveSeatInfoFromServer },
   } = React.useContext(SeatContext);
+
+  const {
+    state: { status },
+    actions: { selectSeatForPurhcase }
+  } = React.useContext(BookingContext);
 
   React.useEffect(() => {
     fetch('/api/seat-availability')

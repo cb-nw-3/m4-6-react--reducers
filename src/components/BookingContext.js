@@ -12,12 +12,27 @@ const initialState = {
 function reducer(state, action) {
   switch (action.type) {
     case "begin-booking-process": {
-      // TODO
       const newState = { ...state };
       newState.status = action.status;
       newState.selectedSeatId = action.seatId;
       newState.price = action.price;
-      console.log(newState);
+      return newState;
+    }
+    case "handle-close": {
+      const newState = { ...state };
+      newState.status = "idle";
+      newState.selectedSeatId = null;
+      newState.price = null;
+      return newState;
+    }
+    case "handle-status": {
+      const newState = { ...state };
+      newState.status = "idle";
+      return newState;
+    }
+    case "handle-purchase": {
+      const newState = { ...state };
+      newState.status = "purchased";
       return newState;
     }
     default: {
@@ -36,12 +51,36 @@ export const BookingProvider = ({ children }) => {
     });
   };
 
+  const handleClose = (data) => {
+    dispatch({
+      type: "handle-close",
+      ...data,
+    });
+  };
+
+  const handleStatus = (data) => {
+    dispatch({
+      type: "handle-status",
+      ...data,
+    });
+  };
+
+  const handlePurchase = (data) => {
+    dispatch({
+      type: "handle-purchase",
+      ...data,
+    });
+  };
+
   return (
     <BookingContext.Provider
       value={{
         state,
         actions: {
           bookSeat,
+          handleClose,
+          handleStatus,
+          handlePurchase,
         },
       }}
     >

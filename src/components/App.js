@@ -6,7 +6,7 @@ import PurchaseModal from "./PurchaseModal";
 
 function App() {
   const {
-    state: { numOfRows, seatsPerRow },
+    state: { numOfRows },
     actions: { receiveSeatInfoFromServer },
   } = React.useContext(SeatContext);
 
@@ -18,8 +18,8 @@ function App() {
 
   return (
     <>
-      <GlobalStyles />
       <PurchaseModal></PurchaseModal>
+      <GlobalStyles />
       This venue has {numOfRows} rows!
       <TicketWidget />
     </>

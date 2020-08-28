@@ -19,6 +19,15 @@ function reducer(state, action) {
         price: action.price,
       };
     }
+    case "cancel-booking-process": {
+      return {
+        ...state,
+        status: "idle",
+        selectedSeatId: null,
+        price: null,
+        error: null,
+      };
+    }
     default:
       throw new Error("Unrecognized action: ${action.type}");
   }
@@ -34,12 +43,19 @@ export const BookingProvider = ({ children }) => {
     });
   };
 
+  const cancelBookingProcess = (data) => {
+    dispatch({
+      type: "cancel-booking-process",
+    });
+  };
+
   return (
     <BookingContext.Provider
       value={{
         state,
         actions: {
           beginBookingProcess,
+          cancelBookingProcess,
         },
       }}
     >

@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 //@material-ui
 import Dialog from "@material-ui/core/Dialog";
-import Table from "@material-ui/core/Table";
+
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TextField from "@material-ui/core/TextField";
@@ -33,87 +33,85 @@ const PurchaseModal = () => {
   return (
     <Dialog open={selectedSeatId !== null} onClose={cancelBookingProcess}>
       <Wrapper>
-        <Title>Purchase Ticket</Title>
-        <Description>
-          You are purchasing 1 ticket for the price of ${price}
-        </Description>
-        <TableWrapper>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Row</TableCell>
-                <TableCell>Seat</TableCell>
-                <TableCell>Price</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <TableRow>
-                <TableCell>{rowName}</TableCell>
-                <TableCell>{seatNum}</TableCell>
-                <TableCell>${price}</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table>
-        </TableWrapper>
+        <Title>
+          <strong>Purchase Ticket</strong>
+        </Title>
+        <div>You are purchasing 1 ticket for the price of ${price}</div>
+
+        <TableHead>
+          <TableRow>
+            <TableCell>Row</TableCell>
+            <TableCell>Seat</TableCell>
+            <TableCell>Price</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell>{rowName}</TableCell>
+            <TableCell>{seatNum}</TableCell>
+            <TableCell>${price}</TableCell>
+          </TableRow>
+        </TableBody>
       </Wrapper>
       <PaymentWrapper>
-        <PaymentTitle>Enter payment details</PaymentTitle>
-        <ButtonField>
-          <CustomTextField>
-            <TextField
-              label="Credit card"
-              variant="outlined"
-              value={creditCard}
-              onChange={(ev) => {
-                setCreditCard(ev.target.value);
-              }}
-            />
-          </CustomTextField>
-          <CustomTextField2>
-            <TextField
-              label="Expiration"
-              variant="outlined"
-              value={expiration}
-              onChange={(ev) => {
-                setExpiration(ev.target.value);
-              }}
-            />
-          </CustomTextField2>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              purchaseTicketRequest();
-              fetch("/api/book-seat", {
-                method: "POST",
-                body: JSON.stringify({
-                  seatId: selectedSeatId,
-                  creditCard: creditCard,
-                  expiration: expiration,
-                }),
-                headers: {
-                  Accept: "application/json",
-                  "Content-Type": "application/json",
-                },
-              })
-                .then((res) => {
-                  if (!res.ok) {
-                    purchaseTicketFailure();
-                    throw Error("ticketFailure");
-                  }
-                  return res.json();
-                })
-                .then((data) => {
-                  if (data.success === true) {
-                    purchaseTicketSuccess();
-                  }
-                })
-                .catch((err) => console.log(err));
+        <PaymentTitle>
+          <strong>Enter payment details</strong>
+        </PaymentTitle>
+
+        <CreditCardField>
+          <TextField
+            label="Credit card"
+            variant="outlined"
+            value={creditCard}
+            onChange={(ev) => {
+              setCreditCard(ev.target.value);
             }}
-          >
-            Purchase
-          </Button>
-        </ButtonField>
+          />
+        </CreditCardField>
+        <ExpirationField>
+          <TextField
+            label="Expiration"
+            variant="outlined"
+            value={expiration}
+            onChange={(ev) => {
+              setExpiration(ev.target.value);
+            }}
+          />
+        </ExpirationField>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            purchaseTicketRequest();
+            fetch("/api/book-seat", {
+              method: "POST",
+              body: JSON.stringify({
+                seatId: selectedSeatId,
+                creditCard: creditCard,
+                expiration: expiration,
+              }),
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              },
+            })
+              .then((res) => {
+                if (!res.ok) {
+                  purchaseTicketFailure();
+                  throw Error("ticketFailure");
+                }
+                return res.json();
+              })
+              .then((data) => {
+                if (data.success === true) {
+                  purchaseTicketSuccess();
+                }
+              })
+              .catch((err) => console.log(err));
+          }}
+        >
+          Purchase
+        </Button>
       </PaymentWrapper>
       {error !== null && (
         <div>An unknown error has occured, please try again</div>
@@ -122,16 +120,30 @@ const PurchaseModal = () => {
   );
 };
 
-const Wrapper = styled.div``;
-const Title = styled.div``;
-const PaymentWrapper = styled.div``;
-const PaymentTitle = styled.div``;
-const ButtonField = styled.div``;
-const CustomTextField = styled.div``;
+const Wrapper = styled.div`
+  padding: 20px;
+  width: 500px;
+  margin: 0px;
+`;
+const Title = styled.div`
+  font-size: 40px;
+  margin-bottom: 10px;
+`;
+const PaymentWrapper = styled.div`
+  margin: 0px;
+  background: lightgrey;
+  padding: 20px;
+`;
+const PaymentTitle = styled.div`
+  font-size: 20px;
+  margin-bottom: 10px;
+`;
 
-const CustomTextField2 = styled.div``;
+const CreditCardField = styled.span``;
 
-const Description = styled.div``;
-const TableWrapper = styled.div``;
+const ExpirationField = styled.span`
+  margin-right: 10px;
+  margin-left: 10px;
+`;
 
 export default PurchaseModal;

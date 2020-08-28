@@ -15,10 +15,11 @@ function reducer(state, action) {
 
     switch (action.type) {
         case 'begin-booking-process': {
-            console.log('hello', action)
+            console.log(action)
             return {    
                 ...state,
                 selectedSeatId: action.payload,
+                price: action.price,
             }
         }
 
@@ -30,10 +31,12 @@ function reducer(state, action) {
 export const BookingProvider = ({ children }) => {
     const [state, dispatch] = React.useReducer(reducer, initialState);
 
-    const beginBookingProcess = (payload) => {
+    const beginBookingProcess = (payload, price) => {
+        console.log(payload, price)
         dispatch({
             type: "begin-booking-process",
             payload,
+            price
         })
     }
     console.log(state)  

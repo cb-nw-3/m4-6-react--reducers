@@ -32,6 +32,7 @@ export const SeatProvider = ({ children }) => {
     const [state, dispatch] = React.useReducer(reducer, initialState);
 
     const receiveSeatInfoFromServer = (data) => {
+        console.log(data)
         dispatch({
             type: "receive-seat-info-from-server",
             ...data,

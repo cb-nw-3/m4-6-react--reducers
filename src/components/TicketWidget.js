@@ -52,11 +52,10 @@ const TicketWidget = () => {
         ); 
 
       })}
-        Price: {selectedSeatId}
 
       <Dialog open={!!selectedSeatId}>
           {}
-        Price: {selectedSeatId}
+        Selected Seat: {selectedSeatId} Price: {}
         {/* Form here w/ rule set CC # and EXP w a submit btn */}
       </Dialog>
       

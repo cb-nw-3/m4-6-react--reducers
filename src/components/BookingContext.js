@@ -25,7 +25,7 @@ function reducer(state, action) {
 export const BookingProvider = ({ children }) => {
     const [state, dispatch] = React.useReducer(reducer, initialState);
 
-    const selectSeatForPurhcase = (data) => {
+    const selectSeatForPurchase = (data) => {
         dispatch({
             type: "begin-booking-process",
             ...data,
@@ -37,7 +37,7 @@ export const BookingProvider = ({ children }) => {
             value={{
                 state,
                 actions: {
-                    selectSeatForPurhcase,
+                    selectSeatForPurchase,
                 },
             }}
         >

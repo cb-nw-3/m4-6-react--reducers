@@ -7,13 +7,12 @@ import TicketWidget from './TicketWidget';
 
 function App() {
   const {
-    state: { numOfRows },
     actions: { receiveSeatInfoFromServer },
   } = React.useContext(SeatContext);
 
   const {
-    state: { status },
-    actions: { selectSeatForPurhcase }
+    status,
+    actions: { selectSeatForPurchase }
   } = React.useContext(BookingContext);
 
   React.useEffect(() => {

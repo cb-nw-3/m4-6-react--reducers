@@ -26,6 +26,9 @@ function reducer(state, action) {
 }
 
 export const SeatProvider = ({ children }) => {
+
+    console.log("SeatProvider initializing...")
+
     const [state, dispatch] = React.useReducer(reducer, initialState);
 
     const receiveSeatInfoFromServer = (data) => {
@@ -34,6 +37,17 @@ export const SeatProvider = ({ children }) => {
             ...data,
         });
     };
+
+    console.log("SeatProvider initialized: ", state);
+
+    // ok. I tried to deconstruct state by using ellipsis.
+    // this was clearly the wrong thing to do.
+
+    // that kind of makes sense. We deconstruct it above, because
+    // we're trying to update the state, so we need to copy in everything
+
+    // here, we're trying to export the whole chimichanga.
+    // no need to deconstruct; in fact, that would make it very weird.
 
     return (
         <SeatContext.Provider

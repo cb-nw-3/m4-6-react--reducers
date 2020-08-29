@@ -8,28 +8,38 @@ import { SeatContext } from './SeatContext'
 import { getRowName, getSeatNum } from '../helpers';
 import { range } from '../utils';
 import seatSrc from "../assets/seat-available.svg";
+import PurchaseModal from './PurchaseModal';
 
 const TicketWidget = () => {
 
-  const { state, dispatch } = React.useContext(SeatContext);
+  const { state: { hasLoaded, seats, numOfRows, seatsPerRow }, dispatch } = React.useContext(SeatContext);
 
-  // console.log("State of state:", state);
+  // is it that it's not properly initialized, or am I just accessing it incorrectly?
+  // It wasn't properly initialized. *facepalm*
 
-  const numOfRows = state.numOfRows;
-  const seatsPerRow = state.seatsPerRow;
-
-  // TODO: implement the loading spinner <CircularProgress />
+  // DONE: implement the loading spinner <CircularProgress />
   // with the hasLoaded flag
 
+  // SeatButton needs to call PurchaseModal, right. But this generates a hook error.
+  // could this be why? Can I not... call it that way? But then... how do I call it?
+
+  // we're trying to use PurchaseModal as a function, but it's a component.
+  // this is obviously not ideal.
+
+  // track the state of if there's a selected seat
+  // if there is, render the modal
+  // if not, render nothing.
+
+  const [selectedSeat, setSelectedSeat] = React.useState(null);
+
   const Seat = (props) => {
-    console.log(props);
     const rowAlph = ["A", "B", "C", "D", "E", "F", "G", "H"];
     let tippyContent = `Row ${rowAlph[props.rowIndex]}, Seat ${props.seatIndex + 1} - $${props.price}`;
     if (props.status === 'available') {
       return (
         <Tippy content={tippyContent}>
-          <SeatButton><img alt="seat for booking" src={seatSrc} /></SeatButton>
-        </Tippy>
+          <SeatButton onClick={() => { setSelectedSeat([props.rowIndex, props.seatIndex]); console.log(selectedSeat); }}><img alt="seat for booking" src={seatSrc} /></SeatButton >
+        </Tippy >
       )
     } else {
       return <img alt="sold seat for booking" style={{
@@ -38,7 +48,7 @@ const TicketWidget = () => {
     }
   }
 
-  if (state.hasLoaded === false) {
+  if (hasLoaded === false) {
     return (
       <LoadingWrapper>
         < CircularProgress />
@@ -55,7 +65,7 @@ const TicketWidget = () => {
               <RowLabel>Row {rowName}</RowLabel>
               {range(seatsPerRow).map(seatIndex => {
                 const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
-                const seat = state["seats"][seatId];
+                const seat = seats[seatId];
 
                 return (
                   <SeatWrapper key={seatId}>
@@ -71,6 +81,9 @@ const TicketWidget = () => {
             </Row>
           );
         })
+        }
+        {selectedSeat &&
+          <PurchaseModal open={true} />
         }
       </Wrapper >
     );

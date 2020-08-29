@@ -6,6 +6,7 @@ import { SeatContext } from "./SeatContext";
 import { getRowName, getSeatNum } from "../helpers";
 import { range } from "../utils";
 import seatImage from "../assets/seat-available.svg";
+import SpinnerJustKF from "./SpinnerJustKF.js";
 
 const TicketWidget = () => {
   // TODO: use values from Context
@@ -22,27 +23,31 @@ const TicketWidget = () => {
   console.log(hasLoaded);
   return (
     <Wrapper>
-      {range(numOfRows).map((rowIndex) => {
-        const rowName = getRowName(rowIndex);
-        console.log(rowName);
-        console.log(seatsPerRow);
+      {hasLoaded ? (
+        range(numOfRows).map((rowIndex) => {
+          const rowName = getRowName(rowIndex);
+          console.log(rowName);
+          console.log(seatsPerRow);
 
-        return (
-          <Row key={rowIndex}>
-            <RowLabel>Row {rowName}</RowLabel>
-            {range(seatsPerRow).map((seatIndex) => {
-              const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
+          return (
+            <Row key={rowIndex}>
+              <RowLabel>Row {rowName}</RowLabel>
+              {range(seatsPerRow).map((seatIndex) => {
+                const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
 
-              return (
-                <SeatWrapper key={seatId}>
-                  {/* TODO: Render the actual <Seat /> */}
-                  <img alt="seat image" src={seatImage} />;
-                </SeatWrapper>
-              );
-            })}
-          </Row>
-        );
-      })}
+                return (
+                  <SeatWrapper key={seatId}>
+                    {/* TODO: Render the actual <Seat /> */}
+                    <img alt="seat image" src={seatImage} />;
+                  </SeatWrapper>
+                );
+              })}
+            </Row>
+          );
+        })
+      ) : (
+        <SpinnerJustKF />
+      )}
     </Wrapper>
   );
 };

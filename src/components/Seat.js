@@ -21,13 +21,26 @@ const Seat = ({ rowName, seatIndex, width, height, price, status }) => {
       ) : (
         <Tippy content={seatText}>
           <SeatWrapper key={seatId}>
-            <img alt="seat image" src={seatImage} />;
+            <Button>
+              <img alt="seat image" src={seatImage} />
+            </Button>
           </SeatWrapper>
         </Tippy>
       )}
     </Wrapper>
   );
 };
+
+const Button = styled.button`
+  border-color: transparent;
+  background-color: transparent;
+
+  :hover {
+    cursor: pointer;
+
+    background-color: blue;
+  }
+`;
 
 const Wrapper = styled.div`
   background: #eee;

@@ -7,11 +7,11 @@ import { getRowName, getSeatNum } from "../helpers";
 import { range } from "../utils";
 import seatImage from "../assets/seat-available.svg";
 import SpinnerJustKF from "./SpinnerJustKF.js";
+import Seat from "./Seat.js";
 
 import Tippy from "@tippy.js/react";
 import "tippy.js/dist/tippy.css";
 
-let isBooked = false;
 const TicketWidget = () => {
   // TODO: use values from Context
 
@@ -46,17 +46,16 @@ const TicketWidget = () => {
               const seatId = `${rowName}-${seatNumber}`;
               const seatPrice = state.seats[seatId].price;
               const seatText = `Row ${rowName} Seat ${seatNumber} - $${seatPrice}`;
-              isBooked = state.seats[seatId].isBooked;
-              return isBooked ? (
-                <BookedSeatWrapper key={seatId}>
-                  <img alt="seat image" src={seatImage} />;
-                </BookedSeatWrapper>
-              ) : (
-                <Tippy content={seatText}>
-                  <SeatWrapper key={seatId}>
-                    <img alt="seat image" src={seatImage} />;
-                  </SeatWrapper>
-                </Tippy>
+
+              return (
+                <Seat
+                  rowName={rowName}
+                  seatIndex={seatIndex}
+                  width={36}
+                  height={36}
+                  price={seatPrice}
+                  status={state.seats[seatId].isBooked}
+                ></Seat>
               );
             })}
           </Row>
@@ -84,15 +83,6 @@ const Row = styled.div`
 
 const RowLabel = styled.div`
   font-weight: bold;
-`;
-
-const SeatWrapper = styled.div`
-  padding: 5px;
-`;
-
-const BookedSeatWrapper = styled.div`
-  filter: grayscale(100%);
-  padding: 5px;
 `;
 
 export default TicketWidget;

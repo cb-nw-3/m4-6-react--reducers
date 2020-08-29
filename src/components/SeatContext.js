@@ -16,7 +16,13 @@ function reducer(state, action) {
       console.log(action);
       console.log(state);
 
-      return state;
+      return {
+        ...state,
+        hasLoaded: true,
+        seats: action.seats,
+        numOfRows: action.numOfRows,
+        seatsPerRow: action.seatsPerRow,
+      };
     }
     default: {
       console.log("error");

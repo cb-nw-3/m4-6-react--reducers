@@ -1,11 +1,12 @@
 import React from "react";
 
 import GlobalStyles from "./GlobalStyles";
-
+import TicketWidget from "./TicketWidget";
 import { SeatContext } from "./SeatContext";
 
 function App() {
   const {
+    state: { numOfRows },
     actions: { recieveSeatInfoFromServer },
   } = React.useContext(SeatContext);
 
@@ -18,7 +19,7 @@ function App() {
   return (
     <>
       <GlobalStyles />
-      TODO: write code
+      <TicketWidget> </TicketWidget>
     </>
   );
 }

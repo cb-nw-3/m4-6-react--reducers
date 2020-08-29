@@ -38,7 +38,6 @@ const Seat = (props) => {
     )
 }
 
-
 const SeatInfo = styled(Tippy)`
 `
 

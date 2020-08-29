@@ -5,6 +5,9 @@ import Dialog from '@material-ui/core/Dialog';
 import { SeatContext } from './SeatContext';
 import { BookingContext} from './BookingContext';
 
+import ModalTable from './ModalTable';
+import ModalPayments from './ModalPayment';
+
 const PurchaseModal = () => {
     //Subscribing to the contexts
     const {
@@ -16,19 +19,20 @@ const PurchaseModal = () => {
             cancelBookingProcess,
         }
     } = React.useContext(BookingContext);
-    
-    const {
-        actions: {markSeatAsPurchased },
-    } = React.useContext(SeatContext);
 
     return (
         <Dialog
             open={selectedSeatId !== null}
             onClose={cancelBookingProcess}
         >
-        test
+            <h2>Purchase Ticket</h2>
+            <p>You're purchasing <strong>1</strong> ticket for the price of {`${price}`}</p>
+            <ModalTable
+                price={price}
+                selectedSeatId={selectedSeatId}
+            />
+            <ModalPayments />
         </Dialog>
-    )
-}
+    )}
 
 export default PurchaseModal;

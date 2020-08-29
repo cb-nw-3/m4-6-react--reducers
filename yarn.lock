@@ -1487,6 +1487,13 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.4.4.tgz#11d5db19bd178936ec89cd84519c4de439574398"
   integrity sha512-1oO6+dN5kdIA3sKPZhRGJTfGVP4SWV6KqlMOwry4J3HfyD68sl/3KmG7DeYUzvN+RbhXDnv/D8vNNB8168tAMg==
 
+"@reach/visually-hidden@^0.11.0":
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/@reach/visually-hidden/-/visually-hidden-0.11.0.tgz#a7cd68ea2a197238dfcffbef8723db9117d31ebb"
+  integrity sha512-O67fK7jz01TYu/V57RiDsxKY29ReHdQkpq+OV0ijmXsv7g5r3Nys51Ry+IqPrJst4Ve5xxFbiJsTt/bGwxorrQ==
+  dependencies:
+    tslib "^2.0.0"
+
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
@@ -1601,6 +1608,13 @@
   integrity sha512-XIB2XbzHTN6ieIjfIMV9hlVcfPU26s2vafYWQcZHWXHOxiaRZYEDKEwdl129Zyg50+foYV2jCgtrqSA6qNuNSA==
   dependencies:
     defer-to-connect "^1.0.1"
+
+"@tippyjs/react@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@tippyjs/react/-/react-4.1.0.tgz#be4e826ac198d2394a5ffed3508ca9c098c527f1"
+  integrity sha512-g6Dpm46edr9T9z+BYxd/eJZa6QMFc4T4z5xrztxVlkti7AhNYf7OaE6b3Nh+boUZZ9wn8xkNq9VrQM5K4huwnQ==
+  dependencies:
+    tippy.js "^6.2.0"
 
 "@types/babel__core@^7.1.0":
   version "7.1.9"
@@ -10189,7 +10203,7 @@ tiny-warning@^1.0.0, tiny-warning@^1.0.2, tiny-warning@^1.0.3:
   resolved "https://registry.yarnpkg.com/tiny-warning/-/tiny-warning-1.0.3.tgz#94a30db453df4c643d0fd566060d60a875d84754"
   integrity sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==
 
-tippy.js@^6.2.6:
+tippy.js@^6.2.0, tippy.js@^6.2.6:
   version "6.2.6"
   resolved "https://registry.yarnpkg.com/tippy.js/-/tippy.js-6.2.6.tgz#4991bbe8f75e741fb92b5ccfeebcd072d71f8345"
   integrity sha512-0tTL3WQNT0nWmpslhDryRahoBm6PT9fh1xXyDfOsvZpDzq52by2rF2nvsW0WX2j9nUZP/jSGDqfKJGjCtoGFKg==
@@ -10296,6 +10310,11 @@ tslib@^1.8.1, tslib@^1.9.0:
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.13.0.tgz#c881e13cc7015894ed914862d276436fa9a47043"
   integrity sha512-i/6DQjL8Xf3be4K/E6Wgpekn5Qasl1usyw++dAA35Ue5orEn65VIxOA+YvNNl9HV3qv70T7CNwjODHZrLwvd1Q==
+
+tslib@^2.0.0:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.0.1.tgz#410eb0d113e5b6356490eec749603725b021b43e"
+  integrity sha512-SgIkNheinmEBgx1IUNirK0TUD4X9yjjBRTqqjggWCU3pUEqIk3/Uwl3yRixYKT6WjQuGiwDv4NomL3wqRCj+CQ==
 
 tsutils@^3.7.0:
   version "3.17.1"

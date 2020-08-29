@@ -8,11 +8,15 @@ import { range } from "../utils";
 import seatImage from "../assets/seat-available.svg";
 import SpinnerJustKF from "./SpinnerJustKF.js";
 
+import Tippy from "@tippy.js/react";
+import "tippy.js/dist/tippy.css";
+
+let isBooked = false;
 const TicketWidget = () => {
   // TODO: use values from Context
 
   const {
-    state: { hasLoaded, numOfRows, seatsPerRow },
+    state: { hasLoaded, numOfRows, seatsPerRow, ...state },
     actions: { recieveSeatInfoFromServer },
   } = React.useContext(SeatContext);
 
@@ -21,33 +25,43 @@ const TicketWidget = () => {
   // TODO: implement the loading spinner <CircularProgress />
   // with the hasLoaded flag
   console.log(hasLoaded);
+
+  if (!hasLoaded) {
+    return (
+      <Wrapper>
+        <SpinnerJustKF />
+      </Wrapper>
+    );
+  }
+
   return (
     <Wrapper>
-      {hasLoaded ? (
-        range(numOfRows).map((rowIndex) => {
-          const rowName = getRowName(rowIndex);
-          console.log(rowName);
-          console.log(seatsPerRow);
-
-          return (
-            <Row key={rowIndex}>
-              <RowLabel>Row {rowName}</RowLabel>
-              {range(seatsPerRow).map((seatIndex) => {
-                const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
-
-                return (
+      {range(numOfRows).map((rowIndex) => {
+        const rowName = getRowName(rowIndex);
+        return (
+          <Row key={rowIndex}>
+            <RowLabel>Row {rowName}</RowLabel>
+            {range(seatsPerRow).map((seatIndex) => {
+              const seatNumber = getSeatNum(seatIndex);
+              const seatId = `${rowName}-${seatNumber}`;
+              const seatPrice = state.seats[seatId].price;
+              const seatText = `Row ${rowName} Seat ${seatNumber} - $${seatPrice}`;
+              isBooked = state.seats[seatId].isBooked;
+              return isBooked ? (
+                <BookedSeatWrapper key={seatId}>
+                  <img alt="seat image" src={seatImage} />;
+                </BookedSeatWrapper>
+              ) : (
+                <Tippy content={seatText}>
                   <SeatWrapper key={seatId}>
-                    {/* TODO: Render the actual <Seat /> */}
                     <img alt="seat image" src={seatImage} />;
                   </SeatWrapper>
-                );
-              })}
-            </Row>
-          );
-        })
-      ) : (
-        <SpinnerJustKF />
-      )}
+                </Tippy>
+              );
+            })}
+          </Row>
+        );
+      })}
     </Wrapper>
   );
 };
@@ -73,6 +87,11 @@ const RowLabel = styled.div`
 `;
 
 const SeatWrapper = styled.div`
+  padding: 5px;
+`;
+
+const BookedSeatWrapper = styled.div`
+  filter: grayscale(100%);
   padding: 5px;
 `;
 

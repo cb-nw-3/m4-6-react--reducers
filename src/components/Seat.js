@@ -13,14 +13,16 @@ const Seat = ({ rowName, seatIndex, width, height, price, status }) => {
   const seatText = `Row ${rowName} Seat ${seatNumber} - $${price}`;
 
   return (
-    <Wrapper>
+    <Wrapper key={seatId}>
       {status ? (
-        <BookedSeatWrapper key={seatId}>
-          <img alt="seat image" src={seatImage} />;
+        <BookedSeatWrapper>
+          <DisabledButton disabled={true}>
+            <img alt="seat image" src={seatImage} />;
+          </DisabledButton>
         </BookedSeatWrapper>
       ) : (
         <Tippy content={seatText}>
-          <SeatWrapper key={seatId}>
+          <SeatWrapper>
             <Button>
               <img alt="seat image" src={seatImage} />
             </Button>
@@ -39,6 +41,15 @@ const Button = styled.button`
     cursor: pointer;
 
     background-color: blue;
+  }
+`;
+
+const DisabledButton = styled.button`
+  border-color: transparent;
+  background-color: transparent;
+
+  :hover {
+    cursor: pointer;
   }
 `;
 

@@ -11,6 +11,7 @@ import Seat from "./Seat.js";
 
 import Tippy from "@tippy.js/react";
 import "tippy.js/dist/tippy.css";
+import PurchaseModal from "./PurchaseModal";
 
 const TicketWidget = () => {
   // TODO: use values from Context

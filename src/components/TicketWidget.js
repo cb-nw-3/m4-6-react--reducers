@@ -1,40 +1,64 @@
-import React from 'react';
-import styled from 'styled-components';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import React, { useContext } from "react";
+import styled from "styled-components";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import { SeatContext } from "./SeatContext";
+import { getRowName, getSeatNum } from "../helpers";
+import { range } from "../utils";
+import Seat from "./Seat.js";
+import { makeStyles } from "@material-ui/core/styles";
 
-import { getRowName, getSeatNum } from '../helpers';
-import { range } from '../utils';
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: "flex",
+    "& > * + *": {
+      marginLeft: theme.spacing(2),
+    },
+  },
+}));
 
 const TicketWidget = () => {
-  // TODO: use values from Context
-  const numOfRows = 6;
-  const seatsPerRow = 6;
+  const {
+    state: { numOfRows, seatsPerRow, seats, hasLoaded },
 
-  // TODO: implement the loading spinner <CircularProgress />
-  // with the hasLoaded flag
+    actions: { receiveSeatInfoFromServer },
+  } = React.useContext(SeatContext);
 
-  return (
-    <Wrapper>
-      {range(numOfRows).map(rowIndex => {
-        const rowName = getRowName(rowIndex);
+  if (hasLoaded) {
+    return (
+      <Wrapper>
+        {range(numOfRows).map((rowIndex) => {
+          const rowName = getRowName(rowIndex);
 
-        return (
-          <Row key={rowIndex}>
-            <RowLabel>Row {rowName}</RowLabel>
-            {range(seatsPerRow).map(seatIndex => {
-              const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
+          return (
+            <Row key={rowIndex}>
+              <RowLabel>Row {rowName}</RowLabel>
+              {range(seatsPerRow).map((seatIndex) => {
+                const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
 
-              return (
-                <SeatWrapper key={seatId}>
-                  {/* TODO: Render the actual <Seat /> */}
-                </SeatWrapper>
-              );
-            })}
-          </Row>
-        );
-      })}
-    </Wrapper>
-  );
+                return (
+                  <SeatWrapper key={seatId}>
+                    <Seat
+                      seatId={seatId}
+                      rowIndex={rowIndex}
+                      seatIndex={seatIndex}
+                      width={36}
+                      height={36}
+                    />
+                  </SeatWrapper>
+                );
+              })}
+            </Row>
+          );
+        })}
+      </Wrapper>
+    );
+  } else {
+    return (
+      <div class="root">
+        <CircularProgress />
+      </div>
+    );
+  }
 };
 
 const Wrapper = styled.div`

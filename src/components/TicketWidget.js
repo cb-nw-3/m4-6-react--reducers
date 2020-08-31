@@ -6,7 +6,6 @@ import { getRowName, getSeatNum } from "../helpers";
 import { range } from "../utils";
 import { SeatContext } from "./SeatContext";
 import Seat from "./Seat";
-import seatAvailableSrc from "../assets/seat-available.svg";
 
 const TicketWidget = () => {
   // TODO: use values from Context
@@ -18,6 +17,9 @@ const TicketWidget = () => {
 
   // TODO: implement the loading spinner <CircularProgress />
   // with the hasLoaded flag
+  if (!hasLoaded) {
+    return <CircularProgress />;
+  }
 
   return (
     <Wrapper>
@@ -29,10 +31,18 @@ const TicketWidget = () => {
             <RowLabel>Row {rowName}</RowLabel>
             {range(seatsPerRow).map((seatIndex) => {
               const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
+              const seat = seats[seatId];
 
               return (
                 <SeatWrapper key={seatId}>
-                  {<img alt="please book a seat" src={seatAvailableSrc} />};
+                  <Seat
+                    rowIndex={rowIndex}
+                    seatIndex={seatIndex}
+                    width={36}
+                    height={36}
+                    price={seat.price}
+                    status={seat.isBooked ? "unavailable" : "available"}
+                  />
                 </SeatWrapper>
               );
             })}
@@ -50,9 +60,9 @@ const Wrapper = styled.div`
   padding: 8px;
 `;
 
-const seatAvailable = styled.img`
-  border: 0.5 solid red;
-`;
+// const seatAvailable = styled.img`
+//   border: 0.5 solid red;
+// `;
 
 const Row = styled.div`
   display: flex;

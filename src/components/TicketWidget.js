@@ -10,9 +10,19 @@ import { range } from '../utils';
 import seatSrc from "../assets/seat-available.svg";
 import PurchaseModal from './PurchaseModal';
 
+import { ModalContext } from './ModalContext';
+
 const TicketWidget = () => {
 
-  const { state: { hasLoaded, seats, numOfRows, seatsPerRow }, dispatch } = React.useContext(SeatContext);
+  const {
+    state: { hasLoaded, seats, numOfRows, seatsPerRow },
+    dispatch
+  } = React.useContext(SeatContext);
+
+  const {
+    modalSeat,
+    setModalSeat
+  } = React.useContext(ModalContext);
 
   // is it that it's not properly initialized, or am I just accessing it incorrectly?
   // It wasn't properly initialized. *facepalm*
@@ -30,15 +40,22 @@ const TicketWidget = () => {
   // if there is, render the modal
   // if not, render nothing.
 
-  const [selectedSeat, setSelectedSeat] = React.useState(null);
-
   const Seat = (props) => {
-    const rowAlph = ["A", "B", "C", "D", "E", "F", "G", "H"];
-    let tippyContent = `Row ${rowAlph[props.rowIndex]}, Seat ${props.seatIndex + 1} - $${props.price}`;
+
+    const rowArray = ["A", "B", "C", "D", "E", "F", "G", "H"];
+    let rowLetter = rowArray[props.rowIndex];
+    let seatNum = props.seatIndex + 1;
+    let tippyContent = `Row ${rowLetter}, Seat ${seatNum} - $${props.price}`;
     if (props.status === 'available') {
       return (
         <Tippy content={tippyContent}>
-          <SeatButton onClick={() => { setSelectedSeat([props.rowIndex, props.seatIndex]); console.log(selectedSeat); }}><img alt="seat for booking" src={seatSrc} /></SeatButton >
+          <SeatButton onClick={() => {
+            setModalSeat({
+              ...props,
+              "rowLetter": rowLetter,
+              "seatNum": seatNum,
+            })
+          }}><img alt="seat for booking" src={seatSrc} /></SeatButton >
         </Tippy >
       )
     } else {
@@ -82,7 +99,7 @@ const TicketWidget = () => {
           );
         })
         }
-        {selectedSeat &&
+        {modalSeat !== undefined &&
           <PurchaseModal open={true} />
         }
       </Wrapper >

@@ -27,8 +27,6 @@ function reducer(state, action) {
 
 export const SeatProvider = ({ children }) => {
 
-    console.log("SeatProvider initializing...")
-
     const [state, dispatch] = React.useReducer(reducer, initialState);
 
     const receiveSeatInfoFromServer = (data) => {
@@ -37,8 +35,6 @@ export const SeatProvider = ({ children }) => {
             ...data,
         });
     };
-
-    console.log("SeatProvider initialized: ", state);
 
     // ok. I tried to deconstruct state by using ellipsis.
     // this was clearly the wrong thing to do.

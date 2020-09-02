@@ -10,7 +10,7 @@ import GlobalStyles from "./GlobalStyles";
 
 function App() {
   const {
-    state: { numOfRows },
+    state: { numOfRows, seatsPerRow },
     actions: { receiveSeatInfoFromServer },
   } = React.useContext(SeatContext);
 

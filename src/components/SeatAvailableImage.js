@@ -1,11 +1,35 @@
 //Libaries
 import React from "react";
+import Tippy from "@tippyjs/react";
+import "tippy.js/dist/tippy.css";
+import "tippy.js/themes/material.css";
+import "tippy.js/animations/scale-subtle.css";
 
 // Assets
 import seatAvailableImg from "../assets/seat-available.svg";
 
-const seatAvailableImage = () => {
-  return <img alt="This seat is available" src={seatAvailableImg} />;
+// Styles
+import styled from "styled-components";
+
+const seatAvailableImage = (props) => {
+  return (
+    <Tippy
+      content={`Seat: ${props.rowName}-${props.seatNum}, Cost: $${props.price}`}
+    >
+      <Wrapper disabled={props.isBooked}>
+        <img src={seatAvailableImg} />
+      </Wrapper>
+    </Tippy>
+  );
 };
+
+const Wrapper = styled.button`
+  display: ${(props) => props.display || "block"};
+  border: none;
+  background: transparent;
+  &:disabled img {
+    filter: grayscale(100%);
+  }
+`;
 
 export default seatAvailableImage;

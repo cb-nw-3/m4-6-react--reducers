@@ -15,7 +15,7 @@ import SeatAvailableImage from "./SeatAvailableImage";
 
 const TicketWidget = () => {
   const {
-    state: { numOfRows, seatsPerRow, hasLoaded },
+    state: { numOfRows, seatsPerRow, hasLoaded, seats },
   } = React.useContext(SeatContext);
 
   return (
@@ -32,10 +32,16 @@ const TicketWidget = () => {
                 <RowLabel>Row {rowName}</RowLabel>
                 {range(seatsPerRow).map((seatIndex) => {
                   const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
+                  const seat = seats[seatId];
 
                   return (
                     <SeatWrapper key={seatId}>
-                      <SeatAvailableImage />
+                      <SeatAvailableImage
+                        isBooked={seat.isBooked}
+                        price={seat.price}
+                        seatNum={getSeatNum(seatIndex)}
+                        rowName={rowName}
+                      />
                     </SeatWrapper>
                   );
                 })}
@@ -53,7 +59,7 @@ const Wrapper = styled.div`
   border: 1px solid #ccc;
   border-radius: 3px;
   padding: 8px;
-  margin: 25%;
+  margin: 10% 25% 0 25%;
 `;
 
 const Row = styled.div`
@@ -67,6 +73,8 @@ const Row = styled.div`
 
 const RowLabel = styled.div`
   font-weight: bold;
+  padding: 10px;
+  color: black;
 `;
 
 const SeatWrapper = styled.div`

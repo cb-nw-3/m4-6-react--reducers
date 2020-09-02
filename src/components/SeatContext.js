@@ -10,6 +10,7 @@ const initialState = {
 };
 
 function reducer(state, action) {
+  console.log("Seat context state", state);
   switch (action.type) {
     case "receive-seat-info-from-server":
       return {
@@ -18,6 +19,17 @@ function reducer(state, action) {
         seats: action.seats,
         seatsPerRow: action.seatsPerRow,
         hasLoaded: true,
+      };
+    case "mark-seat-as-purchased":
+      return {
+        ...state,
+        seats: {
+          ...state.seats,
+          [action.seatId]: {
+            ...state.seats[action.seatId],
+            isBooked: true,
+          },
+        },
       };
     default:
       throw new Error("Unrecognized action");
@@ -32,12 +44,19 @@ export const SeatProvider = ({ children }) => {
       ...data,
     });
   };
+  const markSeatAsPurchased = (data) => {
+    dispatch({
+      type: "mark-seat-as-purchased",
+      ...data,
+    });
+  };
   return (
     <SeatContext.Provider
       value={{
         state,
         actions: {
           receiveSeatInfoFromServer,
+          markSeatAsPurchased,
         },
       }}
     >

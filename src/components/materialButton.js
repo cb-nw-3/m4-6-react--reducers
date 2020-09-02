@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { BookingContext } from "./BookingContext";
+import { SeatContext } from "./SeatContext";
 
 const useStyles = makeStyles((theme) => ({
   margin: {
@@ -31,6 +32,10 @@ export default function MaterialButton({
     },
   } = React.useContext(BookingContext);
 
+  const {
+    actions: { markSeatAsPurchased },
+  } = React.useContext(SeatContext);
+
   const purchaseHandler = async (e) => {
     console.log("event", e);
     e.preventDefault();
@@ -54,6 +59,7 @@ export default function MaterialButton({
         throw new Error(data.message);
       } else {
         purchaseTicketSuccess();
+        markSeatAsPurchased({ seatId: selectedSeatId });
         setCreditCard("");
         setExpiration("");
       }

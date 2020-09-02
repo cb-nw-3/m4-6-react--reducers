@@ -4,6 +4,7 @@ import { BookingContext } from "./BookingContext";
 import TicketWidget from "./TicketWidget";
 import GlobalStyles from "./GlobalStyles";
 import PurchaseModal from "./PurchaseModal";
+import SimpleSnackbar from "./Snackbar";
 
 function App() {
   const {
@@ -13,7 +14,6 @@ function App() {
 
   const {
     state: { status },
-    actions: { cancelBookingProcess },
   } = React.useContext(BookingContext);
 
   React.useEffect(() => {
@@ -25,6 +25,7 @@ function App() {
   return (
     <>
       <GlobalStyles />
+      {status === "purchased" && <SimpleSnackbar />}
       <TicketWidget
         numOfRows={state.numOfRows}
         seatsPerRow={state.seatsPerRow}

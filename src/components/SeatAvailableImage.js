@@ -17,7 +17,9 @@ const seatAvailableImage = (props) => {
       content={`Seat: ${props.rowName}-${props.seatNum}, Cost: $${props.price}`}
     >
       <Wrapper disabled={props.isBooked}>
-        <img src={seatAvailableImg} />
+        <Button>
+          <img src={seatAvailableImg} alt="Seat is Available" />
+        </Button>
       </Wrapper>
     </Tippy>
   );
@@ -30,6 +32,10 @@ const Wrapper = styled.button`
   &:disabled img {
     filter: grayscale(100%);
   }
+`;
+
+const Button = styled.button`
+  border: none;
 `;
 
 export default seatAvailableImage;

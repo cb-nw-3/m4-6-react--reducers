@@ -59,7 +59,7 @@ const Wrapper = styled.div`
   border: 1px solid #ccc;
   border-radius: 3px;
   padding: 8px;
-  margin: 10% 25% 0 25%;
+  margin: 10% 15% 0 15%;
 `;
 
 const Row = styled.div`

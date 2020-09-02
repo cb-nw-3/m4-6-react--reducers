@@ -9,7 +9,20 @@ const initialState = {
 };
 
 function reducer(state, action) {
-  // need to do
+  switch (action.type) {
+    case "receive-seat-info-from-server": {
+      return {
+        ...state,
+        hasLoaded: true,
+        seats: action.seats,
+        numOfRows: action.numOfRows,
+        seatsPerRow: action.seatsPerRow,
+      };
+    }
+
+    default:
+      throw new Error(`Unrecognized action: ${action.type}`);
+  }
 }
 
 export const SeatProvider = ({ children }) => {

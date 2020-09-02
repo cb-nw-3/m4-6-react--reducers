@@ -1,12 +1,28 @@
-import React from 'react';
+// Librairies
+import React from "react";
 
-import GlobalStyles from './GlobalStyles';
+// Components
+import { SeatContext } from "./SeatContext";
+
+// Styles
+import GlobalStyles from "./GlobalStyles";
 
 function App() {
+  const {
+    state: { numOfRows },
+    actions: { receiveSeatInfoFromServer },
+  } = React.useContext(SeatContext);
+
+  React.useEffect(() => {
+    fetch("/api/seat-availability")
+      .then((res) => res.json())
+      .then((data) => receiveSeatInfoFromServer(data));
+  }, []);
+
   return (
     <>
       <GlobalStyles />
-      TODO: write code
+      Testing 1 2 3 {numOfRows}
     </>
   );
 }

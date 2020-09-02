@@ -3,6 +3,7 @@ import React from "react";
 
 // Components
 import { SeatContext } from "./SeatContext";
+import TicketWidget from "./TicketWidget";
 
 // Styles
 import GlobalStyles from "./GlobalStyles";
@@ -22,7 +23,7 @@ function App() {
   return (
     <>
       <GlobalStyles />
-      Testing 1 2 3 {numOfRows}
+      <TicketWidget />
     </>
   );
 }

@@ -41,10 +41,9 @@ export const BookingProvider = ({ children }) => {
       ...data,
     });
   };
-  const cancelBookingProcess = (data) => {
+  const cancelBookingProcess = () => {
     dispatch({
       type: "cancel-booking-process",
-      ...data,
     });
   };
 

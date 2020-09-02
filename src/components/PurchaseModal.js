@@ -18,10 +18,6 @@ export default function FormDialog() {
 
   const [creditCard, setCreditCard] = React.useState("");
   const [expiration, setExpiration] = React.useState("");
-  const [open, setOpen] = React.useState(false);
-
-  console.log(selectedSeatId !== null);
-  console.log(price);
   return (
     <Dialog open={selectedSeatId !== null} aria-labelledby="form-dialog-title">
       <Exit>
@@ -51,7 +47,14 @@ export default function FormDialog() {
             state={expiration}
             setState={setExpiration}
           />
-          <MaterialButton text={"PURCHASE"} width={"150px"} />
+          <MaterialButton
+            text={"PURCHASE"}
+            width={"150px"}
+            expiration={expiration}
+            creditCard={creditCard}
+            setExpiration={setExpiration}
+            setCreditCard={setCreditCard}
+          />
         </PaymentInput>
       </PaymentDiv>
     </Dialog>

@@ -2,13 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Seat from "./Seat";
-
 import { getRowName, getSeatNum } from "../helpers";
 import { range } from "../utils";
 
 const TicketWidget = ({ numOfRows, seatsPerRow, hasLoaded }) => {
-  // TODO: implement the loading spinner <CircularProgress />
-  // with the hasLoaded flag
   if (!hasLoaded) {
     return (
       <div
@@ -36,7 +33,7 @@ const TicketWidget = ({ numOfRows, seatsPerRow, hasLoaded }) => {
               const seatId = `${rowName}-${getSeatNum(seatIndex)}`;
               return (
                 <SeatWrapper key={seatId}>
-                  <Seat seat={seatId} row={rowName} />
+                  <Seat seat={seatId} row={rowName} seatId={seatId} />
                 </SeatWrapper>
               );
             })}
@@ -48,7 +45,7 @@ const TicketWidget = ({ numOfRows, seatsPerRow, hasLoaded }) => {
 };
 
 const Wrapper = styled.div`
-  width: 75%;
+  width: 90%;
   display: flex;
   justify-content: center;
   align-items: center;

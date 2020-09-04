@@ -17,6 +17,8 @@ const Seat = ({ rowName, seatIndex, width, height, price, status }) => {
   function selectSeat(event) {
     console.log(event.target);
     console.log(seatId);
+    console.log(rowName);
+    console.log(seatNumber);
 
     setSelectedSeatId(seatId);
     console.log(selectedSeatId);
@@ -24,7 +26,12 @@ const Seat = ({ rowName, seatIndex, width, height, price, status }) => {
 
   return (
     <Wrapper key={seatId}>
-      <PurchaseModal openSeatID={selectedSeatId}></PurchaseModal>
+      <PurchaseModal
+        openSeatID={selectedSeatId}
+        passed_price={price}
+        rowName={rowName}
+        seatNumber={seatNumber}
+      ></PurchaseModal>
 
       {status ? (
         <BookedSeatWrapper>
@@ -51,8 +58,6 @@ const Button = styled.button`
 
   :hover {
     cursor: pointer;
-
-    background-color: blue;
   }
 `;
 

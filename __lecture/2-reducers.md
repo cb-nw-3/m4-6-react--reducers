@@ -285,6 +285,7 @@ function grantHalfBean(someObject) {
 const updatedObj = grantHalfBean(obj);
 
 console.log(obj === updatedObj);
+// true
 ```
 
 ---
@@ -373,6 +374,7 @@ const initialState = {
 function reducer(state, action) {
   if (action.type === "increment-beans") {
     return {
+      // take eveything that's already there and produce a new object (overwrite it)
       ...state,
       numOfBeans: state.numOfBeans + 0.5,
     };
@@ -450,6 +452,43 @@ export const UserProvider = ({ children }) => {
   );
 };
 ```
+
+<!-- START class example of consuming context: -->
+
+```js
+
+// App.js
+import { UserProvider } from '../wherever';
+
+function App() {
+  return (
+    <UserProvider>
+      <div>
+        whatever
+    </UserProvider>
+  );
+}
+```
+
+```js
+// Header.js
+
+import { UserContext } from "./wherver";
+
+function UserSettings() {
+  const { state, dispatch } = React.useContext(UserContext);
+
+  // when I change input
+
+  <input
+    onChange={(ev) => {
+      dispatch({ type: "change-email", email: ev.target.value });
+    }}
+  />;
+}
+```
+
+<!-- END class example of consuming context: -->
 
 ---
 

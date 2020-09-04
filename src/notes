@@ -1,0 +1,14 @@
+                  {  (state.seats[seatId].isBooked ?  (
+                    <SeatWrapper key={seatId}>
+                    {console.log(state.seats[seatId])}
+                    <img alt="seat image" src={seatImage} />;
+                  </SeatWrapper>
+
+                  ) : 
+                  (
+                    <BookedSeatWrapper key={seatId}>
+                    <img alt="seat image" src={seatImage} />;
+                  </BookedSeatWrapper>
+
+                  )
+                  

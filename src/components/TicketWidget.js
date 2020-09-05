@@ -13,7 +13,7 @@ import { range } from '../utils';
 
 const TicketWidget = () => {
     const {
-        state: { hasLoaded, numOfRows, seatsPerRow },
+        state: { hasLoaded, seats, numOfRows, seatsPerRow },
     } = React.useContext(SeatContext);
 
     // TODO: implement the loading spinner <CircularProgress />
@@ -29,6 +29,7 @@ const TicketWidget = () => {
             </>
         );
     }
+
     return (
         <Wrapper>
             {range(numOfRows).map((rowIndex) => {
@@ -43,7 +44,10 @@ const TicketWidget = () => {
                             )}`;
 
                             return (
-                                <SeatWrapper key={seatId}>
+                                <SeatWrapper
+                                    key={seatId}
+                                    disabled={seats[`${seatId}`].isBooked}
+                                >
                                     <img
                                         src={SeatImage}
                                         alt={`seat-${seatId}`}
@@ -79,8 +83,16 @@ const RowLabel = styled.div`
     padding-top: 20px;
 `;
 
-const SeatWrapper = styled.div`
+const SeatWrapper = styled.button`
     padding: 5px;
+    border: none;
+
+    &:disabled {
+        filter: grayscale(100%);
+    }
+    &:hover:not([disabled]) {
+        cursor: pointer;
+    }
 `;
 
 const LoaderWrapper = styled.div`

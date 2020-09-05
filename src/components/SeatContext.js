@@ -10,13 +10,27 @@ const initialState = {
 };
 
 function reducer(state, action) {
-  // TODO
+  console.log(action);
+  switch (action.type) {
+    case "receive-seat-info-from-server": {
+      return {
+        ...state,
+        hasLoaded: true,
+        seats: action.seats,
+        numOfRows: action.numOfRows,
+        seatsPerRow: action.seatsPerRow,
+      };
+    }
+    default:
+      throw new Error(`Unrecognised action: ${action.type}`);
+  }
 }
 
 export const SeatProvider = ({ children }) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
   const receiveSeatInfoFromServer = (data) => {
+    console.log(data);
     dispatch({
       type: "receive-seat-info-from-server",
       ...data,

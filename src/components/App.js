@@ -5,6 +5,7 @@ import GlobalStyles from "./GlobalStyles";
 
 function App() {
   const {
+    state: { numOfRows },
     actions: { receiveSeatInfoFromServer },
   } = React.useContext(SeatContext);
 
@@ -17,13 +18,16 @@ function App() {
       },
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        console.log(data);
+        receiveSeatInfoFromServer(data);
+      });
   }, []);
 
   return (
     <>
       <GlobalStyles />
-      TODO: write code
+      This venue has {numOfRows} rows!
     </>
   );
 }

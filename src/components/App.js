@@ -2,6 +2,7 @@
 import React from 'react';
 // Components
 import { SeatContext } from './SeatContext';
+import TicketWidget from './TicketWidget';
 // Styles
 import GlobalStyles from './GlobalStyles';
 
@@ -31,7 +32,7 @@ function App() {
     return (
         <>
             <GlobalStyles />
-            Num of rows should update to '8' once call come back: {numOfRows}
+            <TicketWidget />
         </>
     );
 }

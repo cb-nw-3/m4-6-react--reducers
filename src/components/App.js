@@ -1,5 +1,6 @@
 // Libraries
 import React from 'react';
+import styled from 'styled-components';
 // Components
 import { SeatContext } from './SeatContext';
 import TicketWidget from './TicketWidget';
@@ -31,10 +32,20 @@ function App() {
 
     return (
         <>
-            <GlobalStyles />
-            <TicketWidget />
+            <Wrapper>
+                <GlobalStyles />
+                <TicketWidget />
+            </Wrapper>
         </>
     );
 }
+
+const Wrapper = styled.div`
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #222;
+`;
 
 export default App;

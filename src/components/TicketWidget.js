@@ -2,6 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Tippy from '@tippyjs/react';
 // Components
 import { SeatContext } from './SeatContext';
 // Assets
@@ -10,14 +11,15 @@ import SeatImage from '../assets/seat-available.svg';
 import { getRowName, getSeatNum } from '../helpers';
 // Utils
 import { range } from '../utils';
+// Styles
+import 'tippy.js/dist/tippy.css';
+import 'tippy.js/animations/scale-subtle.css';
 
 const TicketWidget = () => {
     const {
         state: { hasLoaded, seats, numOfRows, seatsPerRow },
     } = React.useContext(SeatContext);
 
-    // TODO: implement the loading spinner <CircularProgress />
-    // with the hasLoaded flag
     if (!hasLoaded) {
         return (
             <>
@@ -44,15 +46,28 @@ const TicketWidget = () => {
                             )}`;
 
                             return (
-                                <SeatWrapper
+                                <Tippy
                                     key={seatId}
-                                    disabled={seats[`${seatId}`].isBooked}
+                                    content={
+                                        [`Row ${rowName}, `] +
+                                        [`Seat ${seatIndex + 1} - `] +
+                                        [`$${seats[`${seatId}`].price}`]
+                                    }
+                                    placement="top"
+                                    animation="scale-subtle"
+                                    arrow={true}
+                                    duration={300}
+                                    delay={[100, 0]}
                                 >
-                                    <img
-                                        src={SeatImage}
-                                        alt={`seat-${seatId}`}
-                                    />
-                                </SeatWrapper>
+                                    <SeatWrapper
+                                        disabled={seats[`${seatId}`].isBooked}
+                                    >
+                                        <img
+                                            src={SeatImage}
+                                            alt={`seat-${seatId}`}
+                                        />
+                                    </SeatWrapper>
+                                </Tippy>
                             );
                         })}
                     </Row>

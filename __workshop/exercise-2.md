@@ -12,46 +12,46 @@ Create this file in `src/components/SeatContext.js`
 export const SeatContext = React.createContext();
 
 const initialState = {
-  hasLoaded: false,
-  seats: null,
-  numOfRows: 0,
-  seatsPerRow: 0,
+    hasLoaded: false,
+    seats: null,
+    numOfRows: 0,
+    seatsPerRow: 0,
 };
 
 function reducer(state, action) {
-  // TODO
+    // TODO
 }
 
 export const SeatProvider = ({ children }) => {
-  const [state, dispatch] = React.useReducer(reducer, initialState);
+    const [state, dispatch] = React.useReducer(reducer, initialState);
 
-  const receiveSeatInfoFromServer = (data) => {
-    dispatch({
-      type: "receive-seat-info-from-server",
-      ...data,
-    });
-  };
+    const receiveSeatInfoFromServer = (data) => {
+        dispatch({
+            type: 'receive-seat-info-from-server',
+            ...data,
+        });
+    };
 
-  return (
-    <SeatContext.Provider
-      value={{
-        state,
-        actions: {
-          receiveSeatInfoFromServer,
-        },
-      }}
-    >
-      {children}
-    </SeatContext.Provider>
-  );
+    return (
+        <SeatContext.Provider
+            value={{
+                state,
+                actions: {
+                    receiveSeatInfoFromServer,
+                },
+            }}
+        >
+            {children}
+        </SeatContext.Provider>
+    );
 };
 ```
 
 A few notes here:
 
-- We create a `SeatContext` and export it. This will be used to _subscribe_ to the data held within this context.
-- The `SeatProvider` is what actually makes this data available to the React app, so that components further down the tree can subscribe to it.
-- `receiveSeatInfoFromServer` and `markSeatAsPurchased` are functions that dispatch actions. Sometimes, they're called **action creators**. They're optional - if you wanted, you could pass `dispatch` directly - but it's a best practice to do it this way.
+-   We create a `SeatContext` and export it. This will be used to _subscribe_ to the data held within this context.
+-   The `SeatProvider` is what actually makes this data available to the React app, so that components further down the tree can subscribe to it.
+-   `receiveSeatInfoFromServer` and `markSeatAsPurchased` are functions that dispatch actions. Sometimes, they're called **action creators**. They're optional - if you wanted, you could pass `dispatch` directly - but it's a best practice to do it this way.
 
 You'll notice, the `reducer` has a TODO. It's your job to write this code! But don't worry about it just yet, first we need to make our network requests.
 

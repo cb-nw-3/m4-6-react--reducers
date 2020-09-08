@@ -14,4 +14,7 @@ Install all of these packages with `yarn add`. You can chain them together with 
 
 ```bash
 yarn add package-1 package-2 package-3
+
+yarn add @tippyjs/react @material-ui/core @material-ui/lab react-icons-kit styled-components
+
 ```

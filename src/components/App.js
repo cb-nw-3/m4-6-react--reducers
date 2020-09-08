@@ -6,7 +6,6 @@ import styled from "styled-components";
 
 function App() {
   const {
-    state: { hasLoaded, seats, numOfRows, seatsPerRow },
     actions: { receiveSeatInfoFromServer },
   } = React.useContext(SeatContext);
 

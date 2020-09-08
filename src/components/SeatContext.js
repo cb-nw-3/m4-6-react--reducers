@@ -11,7 +11,6 @@ const initialState = {
 };
 
 function reducer(state, action) {
-    // console.log(action);
     switch (action.type) {
         case 'receive-seat-info-from-server': {
             return {
@@ -37,7 +36,6 @@ export const SeatProvider = ({ children }) => {
             ...data,
         });
     };
-    // console.log(state);
 
     return (
         <SeatContext.Provider

@@ -2,11 +2,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Tippy from '@tippyjs/react';
 // Components
 import { SeatContext } from './SeatContext';
-// Assets
-import SeatImage from '../assets/seat-available.svg';
+import Seat from './Seat';
 // Helpers
 import { getRowName, getSeatNum } from '../helpers';
 // Utils
@@ -44,30 +42,20 @@ const TicketWidget = () => {
                             const seatId = `${rowName}-${getSeatNum(
                                 seatIndex
                             )}`;
+                            const seat = seats[seatId];
 
                             return (
-                                <Tippy
-                                    key={seatId}
-                                    content={
-                                        [`Row ${rowName}, `] +
-                                        [`Seat ${seatIndex + 1} - `] +
-                                        [`$${seats[`${seatId}`].price}`]
-                                    }
-                                    placement="top"
-                                    animation="scale-subtle"
-                                    arrow={true}
-                                    duration={300}
-                                    delay={[100, 0]}
-                                >
-                                    <SeatWrapper
-                                        disabled={seats[`${seatId}`].isBooked}
-                                    >
-                                        <img
-                                            src={SeatImage}
-                                            alt={`seat-${seatId}`}
-                                        />
-                                    </SeatWrapper>
-                                </Tippy>
+                                <div key={seatId}>
+                                    <Seat
+                                        rowIndex={rowIndex}
+                                        seatIndex={seatIndex}
+                                        status={
+                                            seat.isBooked
+                                                ? 'unavailable'
+                                                : 'available'
+                                        }
+                                    />
+                                </div>
                             );
                         })}
                     </Row>
@@ -96,18 +84,6 @@ const Row = styled.div`
 const RowLabel = styled.div`
     font-weight: bold;
     padding-top: 20px;
-`;
-
-const SeatWrapper = styled.button`
-    padding: 5px;
-    border: none;
-
-    &:disabled {
-        filter: grayscale(100%);
-    }
-    &:hover:not([disabled]) {
-        cursor: pointer;
-    }
 `;
 
 const LoaderWrapper = styled.div`

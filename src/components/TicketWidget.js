@@ -11,6 +11,7 @@ const TicketWidget = () => {
   } = React.useContext(SeatContext);
 
   if (hasLoaded === false) {
+    return <p>Is loading!</p>;
   } else {
     return (
       <Wrapper>

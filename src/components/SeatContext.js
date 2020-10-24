@@ -10,17 +10,18 @@ const initialState = {
 };
 
 function reducer(state, action) {
+  console.log("action: ", action);
   switch (action.type) {
     case "receive-seat-info-from-server": {
       return {
         ...state,
+        //UNPACK DATA FROM INITIAL STATE
         hasLoaded: true,
         seats: action.seats,
         numOfRows: action.numOfRows,
         seatsPerRow: action.seatsPerRow,
       };
     }
-
     default:
       throw new Error(`Unrecognized action: ${action.type}`);
   }
@@ -29,14 +30,13 @@ function reducer(state, action) {
 export const SeatProvider = ({ children }) => {
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
-  const receiveSeatInfoFromServer = React.useCallback(
-    (data) =>
-      dispatch({
-        type: "receive-seat-info-from-server",
-        ...data,
-      }),
-    [dispatch]
-  );
+  const receiveSeatInfoFromServer = (data) => {
+    dispatch({
+      type: "receive-seat-info-from-server",
+      ...data,
+    });
+    console.log(receiveSeatInfoFromServer);
+  };
 
   return (
     <SeatContext.Provider
